@@ -53,9 +53,11 @@ def main():
     data_gt_50['r'] = []
     data_gt_50['nh1'] = []
     data_gt_50['hr2'] = []
+    data_gt_50['hr5'] = []
     data_gt_50['hr2_r_lt_25'] = []
     data_gt_50['hr2_r_gt_25'] = []
     data_gt_50['hr2_err'] = []
+    data_gt_50['hr5_err'] = []
 
     data_gt_100 = {}
     data_gt_100['names'] = []
@@ -173,11 +175,13 @@ def main():
             data_gt_50['net_cts'].append(data['net_cts'][i])
             data_gt_50['net_cts_err'].append(data['net_cts_sigma_up'][i])
             data_gt_50['hr2'].append(data['hr2'][i])
+            data_gt_50['hr5'].append(data['hr5'][i])
             if data['r'][i] < 25:
                 data_gt_50['hr2_r_lt_25'].append(data['hr2'][i])
             if data['r'][i] > 25:
                 data_gt_50['hr2_r_gt_25'].append(data['hr2'][i])
             data_gt_50['hr2_err'].append(data['hr2_err'][i])
+            data_gt_50['hr5_err'].append(data['hr5_err'][i])
         if data['net_cts'][i] > 100:
             data_gt_100['names'].append(data['names'][i])
             data_gt_100['ra'].append(data['ra'][i])
@@ -231,7 +235,11 @@ def main():
     print('Num Sources Net Counts > 200: %d out of %d' % (len(data_gt_200['hr2']), len(data['hr2'])))
     print('Num Sources Net Counts < 100: %d out of %d' % (len(data_lt_100['hr2']), len(data['hr2'])))
     print('Num Sources 100 < Net Counts < 200: %d out of %d' % (len(data_gt_100_lt_200['hr2']), len(data['hr2'])))
-
+    i=0
+    for h in data_gt_50['hr5']:
+        if h < 0.6:
+            print data_gt_50['names'][i]
+        i+=1
     """
         # Flat chi square tests
         i=0
