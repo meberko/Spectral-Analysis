@@ -249,6 +249,12 @@ class Analyzer():
         plt.ylabel('Frequency')
         plt.axis([0,10,0,50])
 
+        plt.title('Net Counts Histogram')
+        plt.hist(self.data['net_cts'],np.linspace(0,500,11))
+        plt.axis([0,500,0,150])
+        plt.xlabel('Net Counts')
+        plt.ylabel('Frequency')
+
         plt.title('kT Histogram')
         plt.hist(self.data['kT'],np.linspace(0,30,16))
         plt.xlabel('kT')
@@ -286,6 +292,18 @@ class Analyzer():
                 plt.errorbar(h,self.data_gt_100['hr5'][i],xerr=self.data_gt_100['hr2_err'][i], yerr=self.data_gt_100['hr5_err'][i], ls='None',ecolor='r')
                 plt.scatter(h, self.data_gt_100['hr5'][i], color='r')
             i+=1
+        idx1 = self.data_gt_100['names'].index('174540.04-290030.9')
+        idx2 = self.data_gt_100['names'].index('174541.02-290017.6')
+        idx3 = self.data_gt_100['names'].index('174540.07-290005.7')
+        idx4 = self.data_gt_100['names'].index('174538.07-290022.4')
+        plt.errorbar(self.data_gt_100['hr2'][idx1], self.data_gt_100['hr5'][idx1],xerr=self.data_gt_100['hr2_err'][idx1], yerr=self.data_gt_100['hr5_err'][idx1], ls='None',ecolor='b')
+        plt.scatter(self.data_gt_100['hr2'][idx1],  self.data_gt_100['hr5'][idx1], color='b', marker='D', s=50, zorder=2)
+        plt.errorbar(self.data_gt_100['hr5'][idx2], self.data_gt_100['hr5'][idx2],xerr=self.data_gt_100['hr2_err'][idx2], yerr=self.data_gt_100['hr5_err'][idx2], ls='None',ecolor='b')
+        plt.scatter(self.data_gt_100['hr5'][idx2],  self.data_gt_100['hr5'][idx2], color='b', marker='D', s=50, zorder=2)
+        plt.errorbar(self.data_gt_100['hr5'][idx3], self.data_gt_100['hr5'][idx3],xerr=self.data_gt_100['hr2_err'][idx3], yerr=self.data_gt_100['hr5_err'][idx3], ls='None',ecolor='b')
+        plt.scatter(self.data_gt_100['hr5'][idx3],  self.data_gt_100['hr5'][idx3], color='b', marker='D', s=50, zorder=2)
+        plt.errorbar(self.data_gt_100['hr5'][idx4], self.data_gt_100['hr5'][idx4],xerr=self.data_gt_100['hr2_err'][idx4], yerr=self.data_gt_100['hr5_err'][idx4], ls='None',ecolor='b')
+        plt.scatter(self.data_gt_100['hr5'][idx4],  self.data_gt_100['hr5'][idx4], color='b', marker='D', s=50, zorder=2)
         plt.axis([0,1,0,1.5])
         plt.xlabel('HR2')
         plt.ylabel('HR5')
@@ -298,8 +316,9 @@ class Analyzer():
         plt.xscale('log')
 
         plt.title('HR2 as a function of Radius (Net Counts > 100)')
-        plt.errorbar(self.data_gt_100['r'], self.data_gt_100['hr2'], yerr=self.data_gt_100['hr2_err'], ls='None')
+        plt.errorbar(self.data_gt_100['r'], self.data_gt_100['hr2'], yerr=self.data_gt_100['hr2_err'], ls='None', capsize=2)
         plt.axis([0,80,-0.4,1.2])
+        plt.plot([0,80], [0.48,0.48])
         plt.xlabel('Radius (")')
         plt.ylabel('HR2')
 
@@ -462,6 +481,17 @@ class Analyzer():
                     f.write('\n')
                     i+=1
         i=0
+        with open('hr2_gt_50.reg', 'w') as f:
+            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
+            for h in self.data_gt_50['hr2']:
+                if h<=0.3:
+                    f.write(('circle(%f,%f,1")' % (self.data_gt_50['ra'][i],self.data_gt_50['dec'][i])))
+                    f.write('\n')
+                else:
+                    f.write(('circle(%f,%f,1") # color=red' % (self.data_gt_50['ra'][i],self.data_gt_50['dec'][i])))
+                    f.write('\n')
+                i+=1
+        i=0
         with open('hr2_gt_100.reg', 'w') as f:
             f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
             for h in self.data_gt_100['hr2']:
@@ -519,15 +549,35 @@ class Analyzer():
         print stats.ks_2samp(ks1,ks2)
 
     def runFlatChiSqrTest(self):
+        plt.figure()
         for n in np.linspace(0.1,2,191):
             chi = 0
             j=0
-            for h in hr2:
-                chi+=(h-n)**2/(388*float(hr2_err[j])**2)
+            for h in self.data['hr2']:
+                chi+=(h-n)**2/(388*float(self.data['hr2_err'][j])**2)
                 j+=1
+            plt.scatter(n,chi)
             print(('Constant HR2: %f, Chi Sqr: %f')%(n,chi))
+        plt.show()
+
+    def printInside25GT100(self):
+        with open('sources_lt_25_ncgt_100.txt', 'w') as f:
+            i=0
+            for r in self.data_gt_100['r']:
+                if r < 25:
+                    f.write(self.data_gt_100['names'][i]+'\n')
+                i+=1
+
+    def printOutside25GT100(self):
+        with open('sources_gt_25_ncgt_100.txt', 'w') as f:
+            i=0
+            for r in self.data_gt_100['r']:
+                if r > 25:
+                    f.write(self.data_gt_100['names'][i]+'\n')
+                i+=1
 
     def printSoftGT50(self):
+        i=0
         for h in self.data_gt_50['hr2']:
             if h < 0.3:
                 print(('%s\t%f\t%f\t%f\t%f\t%f')%(  self.data_gt_50['names'][i],
@@ -539,15 +589,22 @@ class Analyzer():
             i+=1
 
     def printSoftGT100(self):
+        i=0
+        soft_ct=0
         for h in self.data_gt_100['hr2']:
-            if h < 0.3:
-                print(('%s\t%f\t%f\t%f\t%f\t%f')%(  self.data_gt_100['names'][i],
-                                                    self.data_gt_100['r'][i],
-                                                    self.data_gt_100['ra'][i],
-                                                    self.data_gt_100['dec'][i],
-                                                    self.data_gt_100['net_cts'][i],
-                                                    self.data_gt_100['hr2'][i]))
-            i+=1
+            if self.data_gt_100['r'][i]<25:
+                if h < 0.3:
+                    soft_ct+=1
+                    print(('%s\t%f\t%f\t%f\t%f\t%f')%(  self.data_gt_100['names'][i],
+                                                        self.data_gt_100['r'][i],
+                                                        self.data_gt_100['ra'][i],
+                                                        self.data_gt_100['dec'][i],
+                                                        self.data_gt_100['net_cts'][i],
+                                                        self.data_gt_100['hr2'][i]))
+                i+=1
+        print soft_ct
+        print i
+        print float(soft_ct)/float(i)
 
     def softHardCounting(self):
         soft = hard = 0
@@ -690,6 +747,10 @@ if __name__ == '__main__':
     a = Analyzer()
     a.softHardCounting()
     a.normalizedCounting()
+    a.printInside25GT100()
+    a.printOutside25GT100()
+    #a.printSoftGT100()
     #a.makeReg()
-    a.runKSTest()
-    #a.plot()
+    #a.runFlatChiSqrTest()
+    #a.runKSTest()
+    a.plot()
