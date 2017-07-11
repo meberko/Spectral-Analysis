@@ -10,6 +10,7 @@ class Analyzer():
         self.data['ra'] = []
         self.data['dec'] = []
         self.data['ph1'] = []
+        self.data['ph1_erru'] = []
         self.data['kT1'] = []
         self.data['nh1'] = []
         self.data['hr2'] = []
@@ -53,6 +54,7 @@ class Analyzer():
         self.data_gt_100['net_cts'] = []
         self.data_gt_100['net_cts_err'] = []
         self.data_gt_100['pli'] = []
+        self.data_gt_100['pli_err'] = []
         self.data_gt_100['r'] = []
         self.data_gt_100['nh1'] = []
         self.data_gt_100['hr2'] = []
@@ -104,6 +106,10 @@ class Analyzer():
         self.r_ratios_eq_area = []
         self.soft_area_normalized = []
         self.hard_area_normalized = []
+        self.pli_r = [22.5,37.5,52.5,67.5,82.5]
+        self.pli_r_errs = [7.5,7.5,7.5,7.5,7.5]
+        self.pli_avgs = []
+        self.pli_avg_errs = []
 
         # Collect from power law self.data
         err_content = self.getErrData()
@@ -112,22 +118,23 @@ class Analyzer():
         vapec_content = self.getVapecData()
 
         for arr in err_content:
-            if len(arr)==16 and arr[1]!='CATALOG_NAME':
+            if len(arr)==17 and arr[1]!='CATALOG_NAME':
                 self.data['names'].append(arr[1])
                 self.data['ra'].append(float(arr[2]))
                 self.data['dec'].append(float(arr[3]))
                 self.data['ph1'].append(float(arr[4]))
-                self.data['src_sig'].append(float(arr[5]))
-                self.data['net_cts'].append(float(arr[6]))
-                self.data['nh1'].append(float(arr[7]))
-                self.data['chi_sqr'].append(float(arr[8]))
-                self.data['net_cts_sigma_up'].append(float(arr[9]))
-                self.data['net_cts_sigma_low'].append(float(arr[10]))
-                self.data['r'].append(float(arr[11]))
-                self.data['hr2'].append(float(arr[12]))
-                self.data['hr2_err'].append(float(arr[13]))
-                self.data['hr5'].append(float(arr[14]))
-                self.data['hr5_err'].append(float(arr[15]))
+                self.data['ph1_erru'].append(float(arr[5]))
+                self.data['src_sig'].append(float(arr[6]))
+                self.data['net_cts'].append(float(arr[7]))
+                self.data['nh1'].append(float(arr[8]))
+                self.data['chi_sqr'].append(float(arr[9]))
+                self.data['net_cts_sigma_up'].append(float(arr[10]))
+                self.data['net_cts_sigma_low'].append(float(arr[11]))
+                self.data['r'].append(float(arr[12]))
+                self.data['hr2'].append(float(arr[13]))
+                self.data['hr2_err'].append(float(arr[14]))
+                self.data['hr5'].append(float(arr[15]))
+                self.data['hr5_err'].append(float(arr[16]))
 
         for arr in vapec_content:
             if len(arr)==9 and arr[1]!='CATALOG_NAME':
@@ -174,6 +181,7 @@ class Analyzer():
                 self.data_gt_100['ra'].append(self.data['ra'][i])
                 self.data_gt_100['dec'].append(self.data['dec'][i])
                 self.data_gt_100['pli'].append(self.data['pli'][i])
+                self.data_gt_100['pli_err'].append(self.data['ph1_erru'][i])
                 self.data_gt_100['nh1'].append(self.data['nh1'][i])
                 self.data_gt_100['r'].append(self.data['r'][i])
                 self.data_gt_100['net_cts'].append(self.data['net_cts'][i])
@@ -314,7 +322,17 @@ class Analyzer():
         plt.xlabel('Net Counts')
         plt.ylabel('HR2')
         plt.xscale('log')
+        """
 
+        print self.pli_avgs
+        print self.pli_avg_errs
+        plt.title('PLI Weighted Averages by Radius Bins (Net Counts > 100)')
+        plt.errorbar(self.pli_r, self.pli_avgs, xerr=self.pli_r_errs, yerr=self.pli_avg_errs, ls='None', capsize=1)
+        plt.axis([0,90,-1.0,2.0])
+        plt.xlabel('Radius (")')
+        plt.ylabel('PLI')
+
+        """
         plt.title('HR2 as a function of Radius (Net Counts > 100)')
         plt.errorbar(self.data_gt_100['r'], self.data_gt_100['hr2'], yerr=self.data_gt_100['hr2_err'], ls='None', capsize=2)
         plt.axis([0,80,-0.4,1.2])
@@ -561,15 +579,15 @@ class Analyzer():
         plt.show()
 
     def printInside25GT100(self):
-        with open('sources_lt_25_ncgt_100.txt', 'w') as f:
+        with open('sources_lt_25_nc_gt_100.txt', 'w') as f:
             i=0
             for r in self.data_gt_100['r']:
                 if r < 25:
-                    f.write(self.data_gt_100['names'][i]+'\n')
+                    f.write(self.data_gt_100['names'][i]+' '+str(self.data_gt_100['hr2'][i])+'\n')
                 i+=1
 
     def printOutside25GT100(self):
-        with open('sources_gt_25_ncgt_100.txt', 'w') as f:
+        with open('sources_gt_25_nc_gt_100.txt', 'w') as f:
             i=0
             for r in self.data_gt_100['r']:
                 if r > 25:
@@ -605,6 +623,13 @@ class Analyzer():
         print soft_ct
         print i
         print float(soft_ct)/float(i)
+
+    """
+    def printGT100(self):
+        i=0
+        for h in data_gt_100['hr2']:
+            print()
+    """
 
     def softHardCounting(self):
         soft = hard = 0
@@ -743,12 +768,66 @@ class Analyzer():
         self.hard_area_normalized.append(float(h70)/float(ann_arr70))
         self.hard_area_normalized.append(float(h80)/float(ann_arr80))
 
+    def pliAvgCalculations(self):
+        i=0
+        n15=n30=n45=n60=n75=0
+        sum15=sum30=sum45=sum60=sum75=0
+        squerr15=squerr30=squerr45=squerr60=squerr75=0
+        for p in self.data_gt_100['pli']:
+            if 15 < self.data_gt_100['r'][i] < 30:
+                n15+=1
+                sum15+=p
+                squerr15+=self.data_gt_100['pli_err'][i]**2/p**2
+            if 30 < self.data_gt_100['r'][i] < 45:
+                n30+=1
+                sum30+=p
+                squerr30+=self.data_gt_100['pli_err'][i]**2/p**2
+            if 45 < self.data_gt_100['r'][i] < 60:
+                n45+=1
+                sum45+=p
+                squerr45+=self.data_gt_100['pli_err'][i]**2/p**2
+            if 60 < self.data_gt_100['r'][i] < 75:
+                n60+=1
+                sum60+=p
+                squerr60+=self.data_gt_100['pli_err'][i]**2/p**2
+            if 75 < self.data_gt_100['r'][i] < 90:
+                n75+=1
+                sum75+=p
+                squerr75+=self.data_gt_100['pli_err'][i]**2/p**2
+            i+=1
+        avg15 = sum15/n15
+        err15 = avg15*np.sqrt(squerr15)/n15**2
+        self.pli_avgs.append(avg15)
+        self.pli_avg_errs.append(err15)
+
+        avg30 = sum30/n30
+        err30 = avg30*np.sqrt(squerr30)/n30**2
+        self.pli_avgs.append(avg30)
+        self.pli_avg_errs.append(err30)
+
+        avg45 = sum45/n45
+        err45 = avg45*np.sqrt(squerr45)/n45**2
+        self.pli_avgs.append(avg45)
+        self.pli_avg_errs.append(err45)
+
+        avg60 = sum60/n60
+        err60 = avg60*np.sqrt(squerr60)/n60**2
+        self.pli_avgs.append(avg60)
+        self.pli_avg_errs.append(err60)
+
+        avg75 = sum75/n75
+        err75 = avg75*np.sqrt(squerr75)/n75**2
+        self.pli_avgs.append(avg75)
+        self.pli_avg_errs.append(err75)
+
+
 if __name__ == '__main__':
     a = Analyzer()
     a.softHardCounting()
     a.normalizedCounting()
     a.printInside25GT100()
     a.printOutside25GT100()
+    a.pliAvgCalculations()
     #a.printSoftGT100()
     #a.makeReg()
     #a.runFlatChiSqrTest()
