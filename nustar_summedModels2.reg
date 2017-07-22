@@ -1,0 +1,38 @@
+# Region file format: DS9 version 4.1
+# Filename: GC2_evt2.fits[EVENTS]
+global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
+fk5
+circle(266.45834,-28.824271,39.6") # color=red font="helvetica 10 normal" text={Arches}
+circle(266.59274,-28.878262,35.4") # color=red font="helvetica 10 normal" text={F1B}
+circle(266.46442,-28.948873,28") # color=red font="helvetica 10 normal" text={MC1}
+circle(266.4983,-28.952803,54.6") # color=red font="helvetica 10 normal" text={MC2}
+circle(266.59033,-28.916712,60") # color=red font="helvetica 10 normal" text={F3}
+circle(266.56962,-28.878357,60") # color=red font="helvetica 10 normal" text={F1A}
+circle(266.53028,-28.90238,114.5") # color=red font="helvetica 10 normal" text={Bridge1}
+circle(266.61567,-28.896448,61") # color=red font="helvetica 10 normal" text={F2}
+ellipse(266.41653,-29.007937,9.8",7.3743221",0.00410385) # color=black width=3 font="helvetica 10 normal" text={SgrA*}
+circle(266.59457,-28.874294,17.5") # font="helvetica 10 normal" text={F1B_a}
+circle(266.59186,-28.883345,14.2") # font="helvetica 10 normal" text={F1B_b}
+circle(265.97846,-29.745167,5") # color=cyan font="helvetica 10 normal" text={1E 1740.7-2942}
+circle(266.07190,-29.662340,5") # color=cyan font="helvetica 10 normal" text={AX J1744.3-2940}
+circle(266.13788,-28.740833,5") # color=cyan font="helvetica 10 normal" text={GRO J1744-28/BurstPulsar}
+circle(266.21500,-29.345000,5") # color=cyan font="helvetica 10 normal" text={KS 1741-293}
+circle(266.47667,-28.915278,5") # color=cyan font="helvetica 10 normal" text={XMM J174554.4-285456}
+circle(266.25971,-28.913806,5") # color=cyan font="helvetica 10 normal" text={Granat 1741.9-2853}
+circle(266.39833,-29.025833,5") # color=cyan font="helvetica 10 normal" text={AX J1745.6-2901}
+circle(266.39822,-29.023370,5") # color=cyan font="helvetica 10 normal" text={Muno1}
+circle(266.40458,-29.017778,5") # color=cyan font="helvetica 10 normal" text={1A 1742-289}
+circle(266.39822,-29.023370,5") # color=cyan font="helvetica 10 normal" text={Muno1}
+circle(266.40863,-29.006230,5") # color=cyan font="helvetica 10 normal" text={Muno2}
+circle(266.41699,-29.001600,5") # color=cyan font="helvetica 10 normal" text={Muno3}
+circle(266.41684,-29.008590,5") # color=cyan font="helvetica 10 normal" text={Muno4}
+circle(266.42078,-29.003980,5") # color=cyan font="helvetica 10 normal" text={Muno5}
+circle(266.47458,-29.062778,5") # color=cyan font="helvetica 10 normal" text={SWIFT J174553.9-290347}
+circle(266.47690,-28.915330,5") # color=cyan font="helvetica 10 normal" text={XMM J174554.4-285456}
+circle(266.58750,-28.728333,5") # color=cyan font="helvetica 10 normal" text={1E 1743.1-2843}
+circle(265.50125,-29.681944,5") # color=cyan font="helvetica 10 normal" text={SAX J1742.0-2941}
+circle(266.76080,-28.883070,5") # color=cyan font="helvetica 10 normal" text={SAX J1747.0-2853}
+circle(267.10185,-29.384849,5") # color=cyan font="helvetica 10 normal" text={XTE J1748-288}
+circle(266.43546,-29.216830,5") # color=cyan font="helvetica 10 normal" text={XMM J174544-2913.0}
+circle(17:45:38.5,-29:01:15,60") # color=magenta font="helvetica 10 normal" text={IGR J17456-2901}
+

@@ -39,6 +39,7 @@ class Analyzer():
         self.data_gt_50['net_cts_err'] = []
         self.data_gt_50['pli'] = []
         self.data_gt_50['r'] = []
+        self.data_gt_50['src_sig'] = []
         self.data_gt_50['nh1'] = []
         self.data_gt_50['hr2'] = []
         self.data_gt_50['hr5'] = []
@@ -56,6 +57,7 @@ class Analyzer():
         self.data_gt_100['pli'] = []
         self.data_gt_100['pli_err'] = []
         self.data_gt_100['r'] = []
+        self.data_gt_100['src_sig'] = []
         self.data_gt_100['nh1'] = []
         self.data_gt_100['hr2'] = []
         self.data_gt_100['hr2_r_lt_25'] = []
@@ -166,6 +168,7 @@ class Analyzer():
                 self.data_gt_50['pli'].append(self.data['pli'][i])
                 self.data_gt_50['nh1'].append(self.data['nh1'][i])
                 self.data_gt_50['r'].append(self.data['r'][i])
+                self.data_gt_50['src_sig'].append(self.data['src_sig'][i])
                 self.data_gt_50['net_cts'].append(self.data['net_cts'][i])
                 self.data_gt_50['net_cts_err'].append(self.data['net_cts_sigma_up'][i])
                 self.data_gt_50['hr2'].append(self.data['hr2'][i])
@@ -184,6 +187,7 @@ class Analyzer():
                 self.data_gt_100['pli_err'].append(self.data['ph1_erru'][i])
                 self.data_gt_100['nh1'].append(self.data['nh1'][i])
                 self.data_gt_100['r'].append(self.data['r'][i])
+                self.data_gt_100['src_sig'].append(self.data['src_sig'][i])
                 self.data_gt_100['net_cts'].append(self.data['net_cts'][i])
                 self.data_gt_100['net_cts_err'].append(self.data['net_cts_sigma_up'][i])
                 self.data_gt_100['hr2'].append(self.data['hr2'][i])
@@ -578,6 +582,22 @@ class Analyzer():
             print(('Constant HR2: %f, Chi Sqr: %f')%(n,chi))
         plt.show()
 
+    def printGT50(self):
+        with open('sources_nc_gt_50.txt', 'w') as f:
+            i=0
+            for r in self.data_gt_50['r']:
+                if self.data_gt_50['src_sig'][i] > 7:
+                    f.write(self.data_gt_50['names'][i]+' '+str(self.data_gt_50['src_sig'][i])+'\n')
+                i+=1
+
+    def printGT100(self):
+        with open('sources_nc_gt_100.txt', 'w') as f:
+            i=0
+            for r in self.data_gt_100['r']:
+                if self.data_gt_100['src_sig'][i] > 7:
+                    f.write(self.data_gt_100['names'][i]+' '+str(self.data_gt_100['src_sig'][i])+'\n')
+                i+=1
+
     def printInside25GT100(self):
         with open('sources_lt_25_nc_gt_100.txt', 'w') as f:
             i=0
@@ -820,16 +840,17 @@ class Analyzer():
         self.pli_avgs.append(avg75)
         self.pli_avg_errs.append(err75)
 
-
 if __name__ == '__main__':
     a = Analyzer()
     a.softHardCounting()
     a.normalizedCounting()
+    a.printGT50()
+    a.printGT100()
     a.printInside25GT100()
     a.printOutside25GT100()
-    a.pliAvgCalculations()
+    #a.pliAvgCalculations()
+    a.makeReg()
     #a.printSoftGT100()
-    #a.makeReg()
     #a.runFlatChiSqrTest()
     #a.runKSTest()
     a.plot()

@@ -1,0 +1,48 @@
+# Region file format: DS9 version 4.1
+# Filename: 001003004AB01_cl_corr_20-40keV_sm2_ex_novign_pix5.img
+global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
+fk5
+ellipse(17:45:49.785,-28:56:39.97,15.51",3.84291",15) # color=white text={G0.017-0.044 (J9)}
+ellipse(17:45:41.873,-28:56:14.79,14.7386",3.97701",335) # color=white text={G0.007-0.014 (J9)}
+ellipse(17:45:42.101,-28:58:51.38,15.8605",4.99102",315) # color=white text={G359.97-0.038 (J9, M8, L7)}
+ellipse(17:45:34.920,-28:57:52.34,15.094",5.84298",65) # color=white text={G359.97-0.009 (J9, M8, L7)}
+ellipse(17:45:44.500,-28:59:40.00,13.532",4.05067",105) # color=white text={G359.964-0.052 (J9, M8, L7)}
+ellipse(17:45:37.800,-28:59:08.00,10.6584",3.05403",55) # color=white text={G359.96-0.028 (J9, M8, L7)}
+ellipse(17:45:39.701,-29:00:22.21,5.33081",2.44464",290) # color=white font="helvetica 12 bold " text={G359.95-0.04 (M8, J9)}
+ellipse(17:45:36.200,-29:00:05.00,6",2",335) # color=white text={G359.942-0.03 (J9)}
+ellipse(17:45:41.200,-29:00:38.00,6",1.5",30) # color=white text={G359.94-0.05 (J9, M8)}
+ellipse(17:45:36.250,-29:00:45.00,5",2",340) # color=white text={G359.933-0.037 (J9, M8, L7)}
+circle(17:45:25.694,-29:00:21.22,3.6") # color=yellow text={M8-Muno2008, L3: Lu2003, L7: Lu2007, J9: Johnson2009}
+ellipse(17:45:39.463,-29:00:30.85,4.5",2.16",55) # color=white text={G359.942-0.045 (M8)}
+ellipse(17:45:40.291,-29:00:03.92,10",2",70) # color=white text={G359.950-0.043 (M8)}
+ellipse(17:45:36.893,-29:00:48.06,1.7",2.5",0) # color=white text={G359.933-0.039 (M8)}
+ellipse(17:45:43.205,-29:00:04.43,1.5",3",70) # color=white text={G359.956-0.052 (M8)}
+ellipse(17:45:35.683,-29:00:05.33,4",2",340) # color=white text={G359.941-0.029 (M8)}
+ellipse(17:45:38.400,-29:01:36.77,4.5",1.8",0) # color=white text={G359.925-0.051 (M8)}
+ellipse(17:38:26.441,-52:22:24.59,12.2905",6.14527",0)
+ellipse(17:45:45.343,-28:59:44.27,5",3",300) # color=white text={G359.965-0.056 (M8, L7)}
+ellipse(17:45:38.050,-29:01:48.36,3",1.5",30) # color=white text={G359.921-0.052 (M8)}
+ellipse(17:45:46.210,-29:00:03.64,5",3",110) # color=white text={G359.962-0.062 (M8)}
+ellipse(17:45:40.548,-28:58:46.27,5",1.2",25) # color=white text={G359.969-0.033 (M8)}
+ellipse(17:45:32.952,-29:01:10.85,7",2.3",10) # color=white text={G359.921-0.030 (M8, L7)}
+ellipse(17:45:39.288,-29:02:26.05,2",5",0) # color=white text={G359.915-0.061 (M8)}
+ellipse(17:45:44.239,-28:58:18.26,5",3",13) # color=white text={G359.983-0.40 (M8)}
+ellipse(17:45:34.483,-29:02:31.13,8",2.5",350) # color=white text={G359.904-0.047 (M8)}
+ellipse(17:45:51.701,-28:59:41.64,4.5",1.5",25) # color=white text={G359.977-0.076 (M8)}
+ellipse(17:45:38.042,-29:03:21.02,5",3",330) # color=white text={G359.899-0.065 (M8)}
+ellipse(17:45:46.887,-29:02:22.27,0",0",0)
+ellipse(17:45:27.847,-29:02:10.43,4",3",0) # color=white text={G359.897-0.023 (M8)}
+ellipse(17:45:40.298,-29:04:24.06,20",8",60) # color=white text={G359.889-0.081 (M8, L3)}
+ellipse(17:45:51.914,-28:57:08.03,12",6",330) # color=white text={G0.014-0.054 (M8)}
+ellipse(17:45:41.837,-28:56:13.49,6",2.5",335) # color=white text={G0.008-0.015 (M8)}
+ellipse(17:45:52.178,-28:56:41.71,9",9",0) # color=white text={G0.021-0.051 (M8)}
+ellipse(17:45:54.838,-28:56:18.24,20",3.5",60) # color=white text={G0.032-0.056 (M8)}
+ellipse(17:46:00.103,-28:57:12.42,25",7",0) # color=white text={G0.029-0.080 (M8)}
+ellipse(17:46:00.850,-28:56:34.80,12.2905",6.14527",0) # color=white text={G0.039-0.077 (M8)}
+ellipse(17:46:00.850,-28:52:40.15,20",15",0) # color=white text={G0.062-0.010 (M8)}
+ellipse(17:46:21.746,-28:55:18.77,30",25",0) # color=white text={G0.097-0.131 (M8)}
+ellipse(17:46:19.709,-28:53:41.10,25",20",0) # color=white text={G0.116-0.111 (M8)}
+ellipse(17:45:36.800,-29:00:43.00,2",5.5",0) # color=white text={G359.936-0.038 (L7)}
+ellipse(17:45:33.600,-28:57:27.00,5",2",60) # color=white text={G359.974-0.00 (L7)}
+ellipse(17:45:55.000,-28:56:15.00,30",7",60) # color=white text={G0.029-0.06 (L7)}
+ellipse(17:43:55.615,-29:13:50.00,4",0.5",0) # color=white text={G359.54+0.18 (L3)}

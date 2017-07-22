@@ -1,0 +1,95 @@
+# Region file format: DS9 version 4.1
+global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
+fk5
+circle(266.414190,-29.011370,1")
+circle(266.414630,-29.010960,1") # color=red
+circle(266.415470,-29.007360,1")
+circle(266.415750,-29.008220,1")
+circle(266.416040,-29.003990,1") # color=red
+circle(266.416130,-29.009510,1") # color=red
+circle(266.416870,-29.007830,1")
+circle(266.416840,-29.008590,1") # color=red
+circle(266.417450,-29.004660,1") # color=red
+circle(266.417300,-29.007200,1") # color=red
+circle(266.417560,-29.011810,1") # color=red
+circle(266.418250,-29.009330,1") # color=red
+circle(266.418370,-29.006700,1") # color=red
+circle(266.418570,-29.010100,1") # color=red
+circle(266.418960,-29.005280,1") # color=red
+circle(266.419990,-29.006820,1") # color=red
+circle(266.419730,-29.007750,1") # color=red
+circle(266.420630,-29.008670,1") # color=red
+circle(266.412020,-29.007530,1")
+circle(266.411980,-29.011620,1")
+circle(266.413690,-29.013660,1") # color=red
+circle(266.413860,-29.014220,1") # color=red
+circle(266.414510,-29.012740,1")
+circle(266.417000,-29.001610,1")
+circle(266.416710,-29.003480,1") # color=red
+circle(266.416860,-29.012880,1") # color=red
+circle(266.418100,-29.002640,1") # color=red
+circle(266.418210,-29.013870,1")
+circle(266.419330,-29.003730,1") # color=red
+circle(266.420770,-29.003980,1")
+circle(266.420940,-29.004910,1") # color=red
+circle(266.421000,-29.007470,1")
+circle(266.421270,-29.008070,1") # color=red
+circle(266.422910,-29.007550,1")
+circle(266.408630,-29.006230,1") # color=red
+circle(266.410100,-29.012240,1")
+circle(266.417370,-29.015450,1")
+circle(266.419230,-29.000510,1")
+circle(266.423180,-29.005710,1")
+circle(266.423090,-29.012090,1") # color=red
+circle(266.423760,-29.007880,1") # color=red
+circle(266.424360,-29.010470,1") # color=red
+circle(266.424700,-29.009110,1") # color=red
+circle(266.406920,-29.009730,1") # color=red
+circle(266.409110,-29.013140,1")
+circle(266.409090,-29.015520,1") # color=red
+circle(266.409630,-29.013560,1")
+circle(266.411890,-29.015670,1") # color=red
+circle(266.415030,-29.016620,1") # color=red
+circle(266.424430,-29.011740,1") # color=red
+circle(266.407140,-29.000540,1") # color=red
+circle(266.423390,-28.997990,1") # color=red
+circle(266.424700,-28.998660,1") # color=red
+circle(266.403800,-29.010930,1")
+circle(266.409230,-29.018320,1") # color=red
+circle(266.413140,-29.020220,1")
+circle(266.421610,-29.020430,1")
+circle(266.423110,-28.995960,1")
+circle(266.426120,-28.999900,1")
+circle(266.414150,-28.993930,1") # color=red
+circle(266.423860,-28.996060,1") # color=red
+circle(266.401910,-29.014950,1")
+circle(266.411070,-29.023210,1")
+circle(266.412670,-29.024090,1") # color=red
+circle(266.416380,-29.023300,1") # color=red
+circle(266.416850,-28.992250,1") # color=red
+circle(266.417180,-29.023810,1") # color=red
+circle(266.423440,-28.992780,1")
+circle(266.424130,-28.993370,1") # color=red
+circle(266.398660,-29.009680,1") # color=red
+circle(266.399410,-29.005030,1") # color=red
+circle(266.404180,-29.019630,1") # color=red
+circle(266.406640,-28.991840,1") # color=red
+circle(266.406500,-29.023790,1")
+circle(266.411540,-29.026110,1") # color=red
+circle(266.412460,-29.026060,1") # color=red
+circle(266.417660,-28.989630,1") # color=red
+circle(266.423440,-28.992780,1")
+circle(266.395350,-29.002320,1") # color=red
+circle(266.395460,-29.005410,1") # color=red
+circle(266.395850,-29.011740,1") # color=red
+circle(266.399020,-29.019290,1")
+circle(266.399320,-29.017790,1") # color=red
+circle(266.408290,-29.026250,1")
+circle(266.407940,-29.026640,1") # color=red
+circle(266.408630,-28.987990,1") # color=red
+circle(266.418870,-28.987840,1") # color=red
+circle(266.422710,-29.027180,1") # color=red
+circle(266.432450,-28.996400,1") # color=red
+circle(266.433360,-28.994890,1") # color=red
+circle(266.435750,-29.000180,1") # color=red
+circle(266.437440,-29.007600,1") # color=red
