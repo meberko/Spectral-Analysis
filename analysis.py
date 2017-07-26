@@ -326,7 +326,6 @@ class Analyzer():
         plt.xlabel('Net Counts')
         plt.ylabel('HR2')
         plt.xscale('log')
-        """
 
         print self.pli_avgs
         print self.pli_avg_errs
@@ -336,7 +335,6 @@ class Analyzer():
         plt.xlabel('Radius (")')
         plt.ylabel('PLI')
 
-        """
         plt.title('HR2 as a function of Radius (Net Counts > 100)')
         plt.errorbar(self.data_gt_100['r'], self.data_gt_100['hr2'], yerr=self.data_gt_100['hr2_err'], ls='None', capsize=2)
         plt.axis([0,80,-0.4,1.2])
@@ -345,6 +343,14 @@ class Analyzer():
         plt.ylabel('HR2')
 
         # Scatter plots
+        """
+        plt.title('Detection Threshold As Function of Net Counts')
+        plt.scatter(self.data['net_cts'], self.data['src_sig'])
+        plt.axis([0, 3100,0,50])
+        plt.xlabel('Net Counts')
+        plt.ylabel('Source Significance (sigma)')
+
+        """
         plt.title('Percent PLI > 1 as a function of Radius')
         plt.plot(self.r_ratios, self.soft_ratios)
         plt.xlabel('Radius (")')

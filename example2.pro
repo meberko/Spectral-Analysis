@@ -88,12 +88,21 @@ endfor
 ; to compile the plotting routines
 qdplot
 
+
+set_plot,'ps'
+device,/portrait,filename='quantile.eps'
+
+
+!P.charsize=2.0
+!P.thick=2.0
+!P.charthick=2.0
+
 ; rainbow color scheme
 loadct,39
 
 ; set the plot window
-xr    =[-0.3,3.3]
-yr    =[1.3,2.3]
+xr    =[-0.2,0.3]
+yr    =[1.4,2.2]
 xtick =['0.6','1','2','3','4','5','  6 keV','7'] ; top x-axis
 qd_setwin, xr=xr, yr=yr, range=range, xtick=xtick, stu=0.5
 
@@ -116,9 +125,6 @@ qd_labelgrid, par, grid, comment=comment, $
 
 ; plot grid
 qd_plotgrid, grid, comment=comment, col=col
-
-; plot the data point
-oploterror, QDx_array_lt_25, QDy_array_lt_25, QDxerr_array_lt_25(*,0), QDyerr_array_lt_25(*,0), /nohat, ERRCOLOR='green'
 
 j=0
 
@@ -175,6 +181,12 @@ for i=0, 57 do begin
    QDyerr_array_gt_25(j, *)=err_QDy
    j = j+1
 endfor
-oploterror, QDx_array_gt_25, QDy_array_gt_25, QDxerr_array_gt_25(*,0), QDyerr_array_gt_25(*,0), /nohat, ERRCOLOR='red'
+; plot the data point
+oploterror, QDx_array_lt_25, QDy_array_lt_25, QDxerr_array_lt_25(*,0), QDyerr_array_lt_25(*,0), /nohat, ERRCOLOR='green', PSYM=3
+oploterror, QDx_array_gt_25, QDy_array_gt_25, QDxerr_array_gt_25(*,0), QDyerr_array_gt_25(*,0), /nohat, ERRCOLOR='red', PSYM=3
+
+
+device,/close
+
 
 end
