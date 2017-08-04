@@ -55,6 +55,7 @@ class HistFit:
 		popt, pcov = curve_fit(func,bin_centers[4:],n[4:],p0=[1.0,2.0])
 
 		plt.plot(bin_centers, func(bin_centers, *popt),'b-')
+		plt.arrow(0.19,1.5,0,-0.4, head_width=0.01, head_length=0.1, fc='k', ec='k')
 
 		k=popt[0]
 		a=popt[1]
@@ -65,18 +66,25 @@ class HistFit:
 
 		perr=np.sqrt(np.diag(pcov))
 		print "perr = %s"%perr
+		plt.text(1, 90, r'$\alpha = $%s$\pm$%s'%(a,perr[1]))
 
 
 if __name__=='__main__':
 	h = HistFit('padilla_lum.txt')
 	h.hist('flux_100_nhfree.txt')
-	h.histPadilla()
+	#h.histPadilla()
 	#plt.axis([0.1,1.5,0.0,16.0])
-	plt.ylim((10**0,10**2))
-	plt.xlim((2*10**-1,2*10**1))
+	axis_font = { 'size': 15 }
+	title_font = { 'size': 25 }
+	x = np.linspace(0.1,2,100)
+	y = 43.5652331909*x**(-1.49548499323)
+	plt.plot(x,y, 'b--')
+	#plt.plot([0.19,0.19],[1,1000], 'b--')
+	plt.ylim((10**0,6*10**2))
+	plt.xlim((1*10**-1,2*10**1))
 	plt.gca().set_xscale("log")
 	plt.gca().set_yscale("log")
-	plt.xlabel('Flux (e-15) [Luminosity for Padilla]')
-	plt.ylabel('# of Sources >F')
-	plt.title('LogN-LogF of Soft Sources with net cts>100 Inside 1 pc')
+	plt.xlabel('Flux [$e-15\  erg/s\cdot cm^2$)]', **axis_font)
+	plt.ylabel('# of Sources >F', **axis_font)
+	plt.title('LogN-LogF of Soft Sources with Net Counts > 100 Inside 1 pc', **title_font)
 	plt.show()

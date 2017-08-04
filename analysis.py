@@ -292,34 +292,39 @@ class Analyzer():
         plt.hist(self.data_gt_100['hr2_r_gt_25'], np.linspace(-1,1,11))
         plt.xlabel('HR2')
         plt.ylabel('Frequency')
+        """
+
+        undetected = ["174540.04-290028.1", "174539.78-290029.5", "174540.15-290025.9", "174539.71-290026.4", "174539.51-290039.4"]
 
         # Errorbar plots
         i=0
         plt.title('HR5 as a function of HR2 (Net Counts > 100) (Green: R<25", Red: R>25")')
         for h in self.data_gt_100['hr2']:
-            if self.data_gt_100['r'][i] < 25:
-                plt.errorbar(h, self.data_gt_100['hr5'][i],xerr=self.data_gt_100['hr2_err'][i], yerr=self.data_gt_100['hr5_err'][i], ls='None',ecolor='g')
-                plt.scatter(h,  self.data_gt_100['hr5'][i], color='g')
-            else:
-                plt.errorbar(h,self.data_gt_100['hr5'][i],xerr=self.data_gt_100['hr2_err'][i], yerr=self.data_gt_100['hr5_err'][i], ls='None',ecolor='r')
-                plt.scatter(h, self.data_gt_100['hr5'][i], color='r')
+            if self.data_gt_100['names'][i] not in undetected:
+                if self.data_gt_100['r'][i] < 25:
+                    plt.errorbar(h, self.data_gt_100['hr5'][i],xerr=self.data_gt_100['hr2_err'][i], yerr=self.data_gt_100['hr5_err'][i], ls='None',ecolor='g')
+                    plt.scatter(h,  self.data_gt_100['hr5'][i], color='g')
+                else:
+                    plt.errorbar(h,self.data_gt_100['hr5'][i],xerr=self.data_gt_100['hr2_err'][i], yerr=self.data_gt_100['hr5_err'][i], ls='None',ecolor='r')
+                    plt.scatter(h, self.data_gt_100['hr5'][i], color='r')
             i+=1
-        idx1 = self.data_gt_100['names'].index('174540.04-290030.9')
-        idx2 = self.data_gt_100['names'].index('174541.02-290017.6')
-        idx3 = self.data_gt_100['names'].index('174540.07-290005.7')
-        idx4 = self.data_gt_100['names'].index('174538.07-290022.4')
-        plt.errorbar(self.data_gt_100['hr2'][idx1], self.data_gt_100['hr5'][idx1],xerr=self.data_gt_100['hr2_err'][idx1], yerr=self.data_gt_100['hr5_err'][idx1], ls='None',ecolor='b')
-        plt.scatter(self.data_gt_100['hr2'][idx1],  self.data_gt_100['hr5'][idx1], color='b', marker='D', s=50, zorder=2)
-        plt.errorbar(self.data_gt_100['hr5'][idx2], self.data_gt_100['hr5'][idx2],xerr=self.data_gt_100['hr2_err'][idx2], yerr=self.data_gt_100['hr5_err'][idx2], ls='None',ecolor='b')
-        plt.scatter(self.data_gt_100['hr5'][idx2],  self.data_gt_100['hr5'][idx2], color='b', marker='D', s=50, zorder=2)
-        plt.errorbar(self.data_gt_100['hr5'][idx3], self.data_gt_100['hr5'][idx3],xerr=self.data_gt_100['hr2_err'][idx3], yerr=self.data_gt_100['hr5_err'][idx3], ls='None',ecolor='b')
-        plt.scatter(self.data_gt_100['hr5'][idx3],  self.data_gt_100['hr5'][idx3], color='b', marker='D', s=50, zorder=2)
-        plt.errorbar(self.data_gt_100['hr5'][idx4], self.data_gt_100['hr5'][idx4],xerr=self.data_gt_100['hr2_err'][idx4], yerr=self.data_gt_100['hr5_err'][idx4], ls='None',ecolor='b')
-        plt.scatter(self.data_gt_100['hr5'][idx4],  self.data_gt_100['hr5'][idx4], color='b', marker='D', s=50, zorder=2)
-        plt.axis([0,1,0,1.5])
+        #idx1 = self.data_gt_100['names'].index('174540.04-290030.9')
+        #idx2 = self.data_gt_100['names'].index('174541.02-290017.6')
+        #idx3 = self.data_gt_100['names'].index('174540.07-290005.7')
+        #idx4 = self.data_gt_100['names'].index('174538.07-290022.4')
+        #plt.errorbar(self.data_gt_100['hr2'][idx1], self.data_gt_100['hr5'][idx1],xerr=self.data_gt_100['hr2_err'][idx1], yerr=self.data_gt_100['hr5_err'][idx1], ls='None',ecolor='b')
+        #plt.scatter(self.data_gt_100['hr2'][idx1],  self.data_gt_100['hr5'][idx1], color='b', marker='D', s=50, zorder=2)
+        #plt.errorbar(self.data_gt_100['hr5'][idx2], self.data_gt_100['hr5'][idx2],xerr=self.data_gt_100['hr2_err'][idx2], yerr=self.data_gt_100['hr5_err'][idx2], ls='None',ecolor='b')
+        #plt.scatter(self.data_gt_100['hr5'][idx2],  self.data_gt_100['hr5'][idx2], color='b', marker='D', s=50, zorder=2)
+        #plt.errorbar(self.data_gt_100['hr5'][idx3], self.data_gt_100['hr5'][idx3],xerr=self.data_gt_100['hr2_err'][idx3], yerr=self.data_gt_100['hr5_err'][idx3], ls='None',ecolor='b')
+        #plt.scatter(self.data_gt_100['hr5'][idx3],  self.data_gt_100['hr5'][idx3], color='b', marker='D', s=50, zorder=2)
+        #plt.errorbar(self.data_gt_100['hr5'][idx4], self.data_gt_100['hr5'][idx4],xerr=self.data_gt_100['hr2_err'][idx4], yerr=self.data_gt_100['hr5_err'][idx4], ls='None',ecolor='b')
+        #plt.scatter(self.data_gt_100['hr5'][idx4],  self.data_gt_100['hr5'][idx4], color='b', marker='D', s=50, zorder=2)
+        plt.axis([-0.2,1.2,-0.2,1.6])
         plt.xlabel('HR2')
         plt.ylabel('HR5')
 
+        """
         plt.title('HR2 as a function of Net Counts (Net Counts > 100)')
         plt.errorbar(self.data_gt_100['net_cts'],self.data_gt_100['hr2'],xerr=self.data_gt_100['net_cts_err'], yerr=self.data_gt_100['hr2_err'], ls='None')
         plt.axis([90,1500,-0.4,1.2])
@@ -343,14 +348,13 @@ class Analyzer():
         plt.ylabel('HR2')
 
         # Scatter plots
-        """
+
         plt.title('Detection Threshold As Function of Net Counts')
         plt.scatter(self.data['net_cts'], self.data['src_sig'])
         plt.axis([0, 3100,0,50])
         plt.xlabel('Net Counts')
         plt.ylabel('Source Significance (sigma)')
 
-        """
         plt.title('Percent PLI > 1 as a function of Radius')
         plt.plot(self.r_ratios, self.soft_ratios)
         plt.xlabel('Radius (")')
