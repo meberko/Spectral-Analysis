@@ -19,7 +19,7 @@ class HistFit:
 		for src in content:
 			lum1.append(src)
 
-		n1,bins1,patches1=plt.hist(lum1,np.linspace(0.3,1.5,150),histtype='step',cumulative=-1,color='r')
+		n1,bins1,patches1=plt.hist(lum1,np.linspace(0.1,100,50),histtype='step',cumulative=-1,color='r')
 
 		bin_centers1=bins1[:-1]+0.5*(bins1[1:]-bins1[:-1])
 
@@ -35,6 +35,7 @@ class HistFit:
 		print "Padilla alpha = %s"%a1
 		perr1=np.sqrt(np.diag(pcov1))
 		print "Padilla perr = %s"%perr1
+		print
 
 	def hist(self, ifname):
 		with open(ifname) as f:
@@ -47,12 +48,12 @@ class HistFit:
 		for src in content:
 		    lum.append(src)
 
-		n, bins, patches=plt.hist(lum,np.linspace(1.0,6.0,20),histtype='step',cumulative=-1)
+		n, bins, patches=plt.hist(lum,np.linspace(2.0,6.0,5),histtype='step',cumulative=-1)
 
 		bin_centers=bins[:-1]+0.5*(bins[1:]-bins[:-1])
 
 
-		popt, pcov = curve_fit(func,bin_centers[4:],n[4:],p0=[1.0,2.0])
+		popt, pcov = curve_fit(func,bin_centers,n,p0=[1.0,2.0])
 
 		plt.plot(bin_centers, func(bin_centers, *popt),'b-')
 
@@ -62,21 +63,23 @@ class HistFit:
 		print "pcov = %s"%pcov
 		print "K = %s"%k
 		print "alpha = %s"%a
-
 		perr=np.sqrt(np.diag(pcov))
 		print "perr = %s"%perr
-
+		print
 
 if __name__=='__main__':
-	h = HistFit('padilla_lum.txt')
+	titlefont = { "size": 30 }
+	axisfont = { "size": 20 }
+	h = HistFit('padilla_flux.txt')
 	h.hist('flux_100_nhfree.txt')
 	h.histPadilla()
+	plt.plot([0.19,0.19],[0,100], 'b--')
 	#plt.axis([0.1,1.5,0.0,16.0])
 	plt.ylim((10**0,10**2))
-	plt.xlim((2*10**-1,2*10**1))
+	plt.xlim((1.0*10**(-2),1.0*10**3))
 	plt.gca().set_xscale("log")
 	plt.gca().set_yscale("log")
-	plt.xlabel('Flux (e-15) [Luminosity for Padilla]')
-	plt.ylabel('# of Sources >F')
-	plt.title('LogN-LogF of Soft Sources with net cts>100 Inside 1 pc')
+	plt.xlabel('Flux [e-15 ergs / (s*cm^2)]', **axisfont)
+	plt.ylabel('# of Sources >F', **axisfont)
+	plt.title('LogN-LogF of Soft Sources with net cts>100 Inside 1 pc', **titlefont)
 	plt.show()
