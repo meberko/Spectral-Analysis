@@ -5,6 +5,10 @@ import sys,math
 
 class Analyzer():
     def __init__(self):
+        self.transients = ['174540.98-290014.3', '174540.07-290005.7', '174540.04-290030.9', '174538.07-290022.4']
+        self.undetected = ['174534.89-290040.6','174544.65-290020.1','174542.53-285933.4','174542.25-285932.3','174538.45-290103.7', '174537.29-290026.2', '174537.55-290029.4', '174541.39-290002.8', '174540.64-290033.3', '174540.33-290039.4', '174538.91-290009.5', '174540.83-290002.8', '174540.04-290028.1','174539.78-290029.5','174540.15-290025.9','174539.71-290026.4', '174539.51-290039.4', '174537.98-290134.5', '174544.57-290000.6']
+        self.axis_font = {'size':20}
+        self.title_font = {'size':30}
         self.data = {}
         self.data['names'] = []
         self.data['ra'] = []
@@ -68,6 +72,7 @@ class Analyzer():
         self.data_gt_100['chi_diff'] = []
 
         self.data_gt_200 = {}
+        self.data_gt_200['names'] = []
         self.data_gt_200['ra'] = []
         self.data_gt_200['dec'] = []
         self.data_gt_200['net_cts'] = []
@@ -79,6 +84,7 @@ class Analyzer():
         self.data_gt_200['hr2_err'] = []
 
         self.data_lt_100 = {}
+        self.data_lt_100['names'] = []
         self.data_lt_100['ra'] = []
         self.data_lt_100['dec'] = []
         self.data_lt_100['net_cts'] = []
@@ -90,6 +96,7 @@ class Analyzer():
         self.data_lt_100['hr2_err'] = []
 
         self.data_gt_100_lt_200 = {}
+        self.data_gt_100_lt_200['names'] = []
         self.data_gt_100_lt_200['ra'] = []
         self.data_gt_100_lt_200['dec'] = []
         self.data_gt_100_lt_200['net_cts'] = []
@@ -200,6 +207,7 @@ class Analyzer():
                 self.data_gt_100['hr5_err'].append(self.data['hr5_err'][i])
                 self.data_gt_100['chi_diff'].append(self.data['chi_sqr'][i] - self.data['chi_sqr_kT1'][i])
             if self.data['net_cts'][i] > 200:
+                self.data_gt_200['names'].append(self.data['names'][i])
                 self.data_gt_200['ra'].append(self.data['ra'][i])
                 self.data_gt_200['dec'].append(self.data['dec'][i])
                 self.data_gt_200['pli'].append(self.data['pli'][i])
@@ -210,6 +218,7 @@ class Analyzer():
                 self.data_gt_200['hr2'].append(self.data['hr2'][i])
                 self.data_gt_200['hr2_err'].append(self.data['hr2_err'][i])
             if self.data['net_cts'][i] < 100:
+                self.data_lt_100['names'].append(self.data['names'][i])
                 self.data_lt_100['ra'].append(self.data['ra'][i])
                 self.data_lt_100['dec'].append(self.data['dec'][i])
                 self.data_lt_100['pli'].append(self.data['pli'][i])
@@ -220,6 +229,7 @@ class Analyzer():
                 self.data_lt_100['hr2'].append(self.data['hr2'][i])
                 self.data_lt_100['hr2_err'].append(self.data['hr2_err'][i])
             if self.data['net_cts'][i] > 100 and self.data['net_cts'][i] < 200:
+                self.data_gt_100_lt_200['names'].append(self.data['names'][i])
                 self.data_gt_100_lt_200['ra'].append(self.data['ra'][i])
                 self.data_gt_100_lt_200['dec'].append(self.data['dec'][i])
                 self.data_gt_100_lt_200['pli'].append(self.data['pli'][i])
@@ -287,28 +297,33 @@ class Analyzer():
         plt.xlabel('PLI')
         plt.ylabel('Frequency')
         #plt.axis([0,10,0,50])
-        axis_font = { 'size': 20}
-        title_font = { 'size': 25}
+        """
+        axis_font = { 'size': 40}
 
         plt.subplot(1,2,1)
-        plt.title('Sources < 1 pc from Sgr A*', **title_font)
+        #plt.title('Sources < 1 pc from Sgr A*', **title_font)
         plt.hist(self.data_gt_100['hr2_r_lt_25'], np.linspace(-1,1,11), rwidth=0.9)
         plt.xlabel('HR2', **axis_font)
         plt.ylabel('Frequency', **axis_font)
+    	plt.tick_params(axis='both', which='major', labelsize=30)
+    	plt.tick_params(axis='both', which='minor', labelsize=30)
 
         plt.subplot(1,2,2)
-        plt.title('Sources > 1 pc from Sgr A*', **title_font)
+        #plt.title('Sources > 1 pc from Sgr A*', **title_font)
         plt.hist(self.data_gt_100['hr2_r_gt_25'], np.linspace(-1,1,11), rwidth=0.9)
         plt.xlabel('HR2', **axis_font)
         plt.ylabel('Frequency', **axis_font)
+    	plt.tick_params(axis='both', which='major', labelsize=30)
+    	plt.tick_params(axis='both', which='minor', labelsize=30)
 
+        plt.show()
+        plt.figure()
         # Errorbar plots
         i=0
-        axis_font = {'size': 20}
-        title_font = {'size': 30}
-        plt.title('HR3 as a function of HR2 (Net Counts > 100) (Green: R<25", Red: R>25")', **title_font)
+        axis_font = {'size': 40}
+        #plt.title('HR3 as a function of HR2 (Net Counts > 100) (Green: R<25", Red: R>25")', **title_font)
         for h in self.data_gt_100['hr2']:
-            if self.data_gt_100['names'][i] not in undetected:
+            if self.data_gt_100['names'][i] not in self.undetected and self.data_gt_100['names'][i] not in self.transients:
                 if self.data_gt_100['r'][i] < 25:
                     plt.errorbar(h, self.data_gt_100['hr5'][i],xerr=self.data_gt_100['hr2_err'][i], yerr=self.data_gt_100['hr5_err'][i], ls='None',ecolor='g')
                     plt.scatter(h,  self.data_gt_100['hr5'][i], color='g')
@@ -321,9 +336,14 @@ class Analyzer():
         plt.scatter(0.67, 0.92, color='black', marker='D', s=50, zorder=2)
         plt.scatter(0.66, 0.92, color='black', marker='D', s=50, zorder=2)
         plt.axis([-0.2,1.2,-0.2,1.6])
-        plt.xlabel('HR2')
-        plt.ylabel('HR5')
+        plt.tick_params(axis='both', which='major', labelsize=30)
+    	plt.tick_params(axis='both', which='minor', labelsize=30)
+        plt.xlabel('HR2', **axis_font)
+        plt.ylabel('HR3', **axis_font)
+        plt.show()
+        plt.figure()
 
+        """
         plt.title('HR2 as a function of Net Counts (Net Counts > 100)')
         plt.errorbar(self.data_gt_100['net_cts'],self.data_gt_100['hr2'],xerr=self.data_gt_100['net_cts_err'], yerr=self.data_gt_100['hr2_err'], ls='None')
         plt.axis([90,1500,-0.4,1.2])
@@ -338,8 +358,8 @@ class Analyzer():
         plt.axis([0,90,-1.0,2.0])
         plt.xlabel('Radius (")')
         plt.ylabel('PLI')
-        axis_font = { 'size': 20}
-        title_font = { 'size': 30}
+        """
+
         i=0
         p_r=[]
         p_h=[]
@@ -350,13 +370,20 @@ class Analyzer():
                 p_h.append(self.data_gt_100['hr2'][i])
                 p_he.append(self.data_gt_100['hr2_err'][i])
             i+=1
-        plt.title('HR2 as a function of Radial Distance from Sgr A* (Net Counts > 100)', **title_font)
-        plt.errorbar(p_r, p_h, yerr=p_he, ls='None', capsize=2)
+        axis_font = { 'size': 40}
+
+        #plt.title('HR2 as a function of Radial Distance from Sgr A* (Net Counts > 100)', **title_font)
+        plt.errorbar(p_r, p_h, yerr=p_he, ls='None', elinewidth = 3, capsize=5, markeredgewidth=3)
         plt.axis([0,3.2,-0.4,1.2])
         plt.plot([0,3.2], [0.48,0.48])
         plt.xlabel('Radial Distance from Sgr A* (pc)', **axis_font)
         plt.ylabel('HR2', **axis_font)
+    	plt.tick_params(axis='both', which='major', labelsize=30)
+    	plt.tick_params(axis='both', which='minor', labelsize=30)
 
+        plt.show()
+        plt.figure()
+        """
         # Scatter plots
         plt.title('Detection Threshold As Function of Net Counts')
         plt.scatter(self.data['net_cts'], self.data['src_sig'])
@@ -452,22 +479,99 @@ class Analyzer():
     def makeReg(self):
         i=0
         with open('pli.reg', 'w') as f:
-            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
+            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=3 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
             for p in self.data['pli']:
-                if p != -10:
-                    if p > 1:
+                if self.data['names'][i] not in self.transients and self.data['names'][i] not in self.undetected:
+                    if p != -10:
+                        if p > 1:
+                            f.write(('circle(%f,%f,1")' % (self.data['ra'][i],self.data['dec'][i])))
+                            f.write('\n')
+                        else:
+                            f.write(('circle(%f,%f,1") # color=red' % (self.data['ra'][i],self.data['dec'][i])))
+                        f.write('\n')
+                i+=1
+        i=0
+        with open('pli_gt_100.reg', 'w') as f:
+            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=3 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
+            for p in self.data_gt_100['pli']:
+                if self.data_gt_100['names'][i] not in self.transients and self.data_gt_100['names'][i] not in self.undetected:
+                    if p!=-10:
+                        if p>1:
+                            f.write(('circle(%f,%f,1")' % (self.data_gt_100['ra'][i],self.data_gt_100['dec'][i])))
+                            f.write('\n')
+                        else:
+                            f.write(('circle(%f,%f,1") # color=red' % (self.data_gt_100['ra'][i],self.data_gt_100['dec'][i])))
+                        f.write('\n')
+                i+=1
+        i=0
+        with open('pli_gt_200.reg', 'w') as f:
+            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=3 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
+            for p in self.data_gt_200['pli']:
+                if self.data_gt_200['names'][i] not in self.transients and self.data_gt_200['names'][i] not in self.undetected:
+                    if p!=-10:
+                        if p>1:
+                            f.write(('circle(%f,%f,1")' % (self.data_gt_200['ra'][i],self.data_gt_200['dec'][i])))
+                            f.write('\n')
+                        else:
+                            f.write(('circle(%f,%f,1") # color=red' % (self.data_gt_200['ra'][i],self.data_gt_200['dec'][i])))
+                        f.write('\n')
+                i+=1
+        i=0
+        with open('pli_lt_100.reg', 'w') as f:
+            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=3 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
+            for p in self.data_lt_100['pli']:
+                if self.data_lt_100['names'][i] not in self.transients and self.data_lt_100['names'][i] not in self.undetected:
+                    if p!=-10:
+                        if p>1:
+                            f.write(('circle(%f,%f,1")' % (self.data_lt_100['ra'][i],self.data_lt_100['dec'][i])))
+                            f.write('\n')
+                        else:
+                            f.write(('circle(%f,%f,1") # color=red' % (self.data_lt_100['ra'][i],self.data_lt_100['dec'][i])))
+                        f.write('\n')
+                i+=1
+        i=0
+        with open('pli_gt_100_lt_200.reg', 'w') as f:
+            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=3 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
+            for p in self.data_gt_100_lt_200['pli']:
+                if self.data_gt_100_lt_200['names'][i] not in self.transients and self.data_gt_100_lt_200['names'][i] not in self.undetected:
+                    if p!=-10:
+                        if p>1:
+                            f.write(('circle(%f,%f,1")' % (self.data_gt_100_lt_200['ra'][i],self.data_gt_100_lt_200['dec'][i])))
+                            f.write('\n')
+                        else:
+                            f.write(('circle(%f,%f,1") # color=red' % (self.data_gt_100_lt_200['ra'][i],self.data_gt_100_lt_200['dec'][i])))
+                        f.write('\n')
+                i+=1
+        i=0
+        with open('hr2.reg', 'w') as f:
+            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=3 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
+            for h in self.data['hr2']:
+                if self.data['names'][i] not in self.transients and self.data['names'][i] not in self.undetected:
+                    if h<=0.3:
                         f.write(('circle(%f,%f,1")' % (self.data['ra'][i],self.data['dec'][i])))
                         f.write('\n')
                     else:
                         f.write(('circle(%f,%f,1") # color=red' % (self.data['ra'][i],self.data['dec'][i])))
                         f.write('\n')
+                    i+=1
+        i=0
+        with open('hr2_gt_50.reg', 'w') as f:
+            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=3 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
+            for h in self.data_gt_50['hr2']:
+                if self.data_gt_50['names'][i] not in self.transients and self.data_gt_50['names'][i] not in self.undetected:
+                    if h<=0.3:
+                        f.write(('circle(%f,%f,1")' % (self.data_gt_50['ra'][i],self.data_gt_50['dec'][i])))
+                        f.write('\n')
+                    else:
+                        f.write(('circle(%f,%f,1") # color=red' % (self.data_gt_50['ra'][i],self.data_gt_50['dec'][i])))
+                        f.write('\n')
                 i+=1
         i=0
-        with open('pli_gt_100.reg', 'w') as f:
-            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
-            for p in self.data_gt_100['pli']:
-                if p!=-10:
-                    if p>1:
+        with open('hr2_gt_100.reg', 'w') as f:
+            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=3 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
+            for h in self.data_gt_100['hr2']:
+                if self.data_gt_100['names'][i] not in self.transients and self.data_gt_100['names'][i] not in self.undetected:
+                    if h<=0.3:
                         f.write(('circle(%f,%f,1")' % (self.data_gt_100['ra'][i],self.data_gt_100['dec'][i])))
                         f.write('\n')
                     else:
@@ -475,11 +579,11 @@ class Analyzer():
                         f.write('\n')
                 i+=1
         i=0
-        with open('pli_gt_200.reg', 'w') as f:
-            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
-            for p in self.data_gt_200['pli']:
-                if p!=-10:
-                    if p>1:
+        with open('hr2_gt_200.reg', 'w') as f:
+            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=3 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
+            for h in self.data_gt_200['hr2']:
+                if self.data_gt_200['names'][i] not in self.transients and self.data_gt_200['names'][i] not in self.undetected:
+                    if h<=0.3:
                         f.write(('circle(%f,%f,1")' % (self.data_gt_200['ra'][i],self.data_gt_200['dec'][i])))
                         f.write('\n')
                     else:
@@ -487,11 +591,11 @@ class Analyzer():
                         f.write('\n')
                 i+=1
         i=0
-        with open('pli_lt_100.reg', 'w') as f:
-            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
-            for p in self.data_lt_100['pli']:
-                if p!=-10:
-                    if p>1:
+        with open('hr2_lt_100.reg', 'w') as f:
+            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=3 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
+            for h in self.data_lt_100['hr2']:
+                if self.data_lt_100['names'][i] not in self.transients and self.data_lt_100['names'][i] not in self.undetected:
+                    if h<=0.3:
                         f.write(('circle(%f,%f,1")' % (self.data_lt_100['ra'][i],self.data_lt_100['dec'][i])))
                         f.write('\n')
                     else:
@@ -499,82 +603,16 @@ class Analyzer():
                         f.write('\n')
                 i+=1
         i=0
-        with open('pli_gt_100_lt_200.reg', 'w') as f:
-            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
-            for p in self.data_gt_100_lt_200['pli']:
-                if p!=-10:
-                    if p>1:
+        with open('hr2_gt_100_lt_200.reg', 'w') as f:
+            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=3 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
+            for h in self.data_gt_100_lt_200['hr2']:
+                if self.data_gt_100_lt_200['names'][i] not in self.transients and self.data_gt_100_lt_200['names'][i] not in self.undetected:
+                    if h<=0.3:
                         f.write(('circle(%f,%f,1")' % (self.data_gt_100_lt_200['ra'][i],self.data_gt_100_lt_200['dec'][i])))
                         f.write('\n')
                     else:
                         f.write(('circle(%f,%f,1") # color=red' % (self.data_gt_100_lt_200['ra'][i],self.data_gt_100_lt_200['dec'][i])))
                         f.write('\n')
-                i+=1
-        i=0
-        with open('hr2.reg', 'w') as f:
-            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
-            for h in self.data['hr2']:
-                if h<=0.3:
-                    f.write(('circle(%f,%f,1")' % (self.data['ra'][i],self.data['dec'][i])))
-                    f.write('\n')
-                else:
-                    f.write(('circle(%f,%f,1") # color=red' % (self.data['ra'][i],self.data['dec'][i])))
-                    f.write('\n')
-                    i+=1
-        i=0
-        with open('hr2_gt_50.reg', 'w') as f:
-            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
-            for h in self.data_gt_50['hr2']:
-                if h<=0.3:
-                    f.write(('circle(%f,%f,1")' % (self.data_gt_50['ra'][i],self.data_gt_50['dec'][i])))
-                    f.write('\n')
-                else:
-                    f.write(('circle(%f,%f,1") # color=red' % (self.data_gt_50['ra'][i],self.data_gt_50['dec'][i])))
-                    f.write('\n')
-                i+=1
-        i=0
-        with open('hr2_gt_100.reg', 'w') as f:
-            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
-            for h in self.data_gt_100['hr2']:
-                if h<=0.3:
-                    f.write(('circle(%f,%f,1")' % (self.data_gt_100['ra'][i],self.data_gt_100['dec'][i])))
-                    f.write('\n')
-                else:
-                    f.write(('circle(%f,%f,1") # color=red' % (self.data_gt_100['ra'][i],self.data_gt_100['dec'][i])))
-                    f.write('\n')
-                i+=1
-        i=0
-        with open('hr2_gt_200.reg', 'w') as f:
-            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
-            for h in self.data_gt_200['hr2']:
-                if h<=0.3:
-                    f.write(('circle(%f,%f,1")' % (self.data_gt_200['ra'][i],self.data_gt_200['dec'][i])))
-                    f.write('\n')
-                else:
-                    f.write(('circle(%f,%f,1") # color=red' % (self.data_gt_200['ra'][i],self.data_gt_200['dec'][i])))
-                    f.write('\n')
-                i+=1
-        i=0
-        with open('hr2_lt_100.reg', 'w') as f:
-            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
-            for h in self.data_lt_100['hr2']:
-                if h<=0.3:
-                    f.write(('circle(%f,%f,1")' % (self.data_lt_100['ra'][i],self.data_lt_100['dec'][i])))
-                    f.write('\n')
-                else:
-                    f.write(('circle(%f,%f,1") # color=red' % (self.data_lt_100['ra'][i],self.data_lt_100['dec'][i])))
-                    f.write('\n')
-                i+=1
-        i=0
-        with open('hr2_gt_100_lt_200.reg', 'w') as f:
-            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
-            for h in self.data_gt_100_lt_200['hr2']:
-                if h<=0.3:
-                    f.write(('circle(%f,%f,1")' % (self.data_gt_100_lt_200['ra'][i],self.data_gt_100_lt_200['dec'][i])))
-                    f.write('\n')
-                else:
-                    f.write(('circle(%f,%f,1") # color=red' % (self.data_gt_100_lt_200['ra'][i],self.data_gt_100_lt_200['dec'][i])))
-                    f.write('\n')
                 i+=1
 
     def runKSTest(self):
@@ -875,7 +913,7 @@ if __name__ == '__main__':
     #a.printInside25GT100()
     #a.printOutside25GT100()
     #a.pliAvgCalculations()
-    #a.makeReg()
+    a.makeReg()
     #a.printSoftGT100()
     #a.runFlatChiSqrTest()
     #a.runKSTest()

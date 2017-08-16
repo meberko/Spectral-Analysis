@@ -1,23 +1,16 @@
 # Region file format: DS9 version 4.1
-global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
+global color=green dashlist=8 3 width=3 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
 fk5
 circle(266.414190,-29.011370,1")
-circle(266.415470,-29.007360,1")
-circle(266.415750,-29.008220,1")
-circle(266.416870,-29.007830,1")
-circle(266.416840,-29.008590,1") # color=red
 circle(266.417560,-29.011810,1") # color=red
 circle(266.418960,-29.005280,1") # color=red
 circle(266.420630,-29.008670,1")
 circle(266.412020,-29.007530,1") # color=red
 circle(266.411980,-29.011620,1") # color=red
 circle(266.414510,-29.012740,1")
-circle(266.417000,-29.001610,1") # color=red
-circle(266.420770,-29.003980,1") # color=red
 circle(266.420940,-29.004910,1") # color=red
 circle(266.421270,-29.008070,1") # color=red
 circle(266.422910,-29.007550,1") # color=red
-circle(266.408630,-29.006230,1") # color=red
 circle(266.410100,-29.012240,1") # color=red
 circle(266.417370,-29.015450,1") # color=red
 circle(266.419230,-29.000510,1") # color=red

@@ -1,5 +1,5 @@
 # Region file format: DS9 version 4.1
-global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
+global color=green dashlist=8 3 width=3 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
 fk5
 circle(266.412810,-29.008190,1") # color=red
 circle(266.414500,-29.004530,1")
@@ -8,11 +8,8 @@ circle(266.414760,-29.005530,1") # color=red
 circle(266.415440,-29.011690,1")
 circle(266.416540,-29.003980,1")
 circle(266.417160,-29.011490,1")
-circle(266.418070,-29.010950,1") # color=red
 circle(266.419200,-29.007390,1")
-circle(266.419370,-29.009260,1") # color=red
 circle(266.411250,-29.010420,1")
-circle(266.412160,-29.002640,1") # color=red
 circle(266.412430,-29.006430,1") # color=red
 circle(266.412320,-29.012210,1")
 circle(266.413240,-29.011910,1")
@@ -33,7 +30,6 @@ circle(266.413790,-29.000150,1") # color=red
 circle(266.414240,-29.000570,1") # color=red
 circle(266.414810,-29.015080,1")
 circle(266.416010,-29.015230,1")
-circle(266.420130,-29.000790,1") # color=red
 circle(266.420900,-29.014510,1") # color=red
 circle(266.422200,-29.002670,1") # color=red
 circle(266.422470,-29.004120,1")
@@ -42,7 +38,6 @@ circle(266.422800,-29.004540,1")
 circle(266.422920,-29.005160,1")
 circle(266.423120,-29.012770,1")
 circle(266.405590,-29.007760,1") # color=red
-circle(266.406500,-29.008190,1") # color=red
 circle(266.407180,-29.010380,1") # color=red
 circle(266.407860,-29.008030,1") # color=red
 circle(266.407970,-29.001750,1") # color=red
@@ -60,7 +55,6 @@ circle(266.412960,-29.018440,1") # color=red
 circle(266.418240,-29.016140,1")
 circle(266.421270,-29.017810,1") # color=red
 circle(266.422390,-29.000180,1")
-circle(266.422460,-29.000790,1") # color=red
 circle(266.422700,-29.001740,1") # color=red
 circle(266.423560,-29.003410,1")
 circle(266.423590,-29.015300,1") # color=red
@@ -72,11 +66,9 @@ circle(266.426560,-29.009490,1")
 circle(266.427180,-29.009190,1") # color=red
 circle(266.404810,-29.004970,1") # color=red
 circle(266.405710,-29.002780,1") # color=red
-circle(266.405410,-29.007280,1") # color=red
 circle(266.406250,-29.003310,1") # color=red
 circle(266.407260,-29.015670,1") # color=red
 circle(266.409840,-28.998620,1") # color=red
-circle(266.410240,-29.017700,1") # color=red
 circle(266.411230,-28.996850,1")
 circle(266.410880,-28.997710,1") # color=red
 circle(266.413200,-28.997210,1") # color=red
@@ -218,8 +210,6 @@ circle(266.422310,-29.026250,1")
 circle(266.422660,-28.992080,1") # color=red
 circle(266.424780,-29.022460,1") # color=red
 circle(266.425240,-28.991330,1") # color=red
-circle(266.426050,-28.992330,1") # color=red
-circle(266.427220,-28.992630,1") # color=red
 circle(266.427920,-28.995350,1") # color=red
 circle(266.429740,-28.995530,1") # color=red
 circle(266.430530,-28.997390,1")
@@ -235,7 +225,6 @@ circle(266.434180,-29.001940,1") # color=red
 circle(266.434530,-29.005080,1") # color=red
 circle(266.435810,-29.010370,1")
 circle(266.395000,-29.008540,1") # color=red
-circle(266.395400,-29.011280,1") # color=red
 circle(266.395670,-29.001090,1") # color=red
 circle(266.395780,-29.008930,1") # color=red
 circle(266.396170,-29.002370,1")
@@ -291,7 +280,6 @@ circle(266.434070,-28.994660,1") # color=red
 circle(266.434240,-29.017430,1") # color=red
 circle(266.435150,-29.000100,1") # color=red
 circle(266.435410,-29.017840,1") # color=red
-circle(266.436080,-29.005590,1") # color=red
 circle(266.436150,-29.016830,1") # color=red
 circle(266.436510,-29.006100,1")
 circle(266.437000,-29.000650,1") # color=red

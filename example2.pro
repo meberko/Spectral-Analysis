@@ -93,18 +93,26 @@ set_plot,'ps'
 device,/portrait,filename='quantile.eps'
 
 
-!P.charsize=2.0
-!P.thick=2.0
-!P.charthick=2.0
+!P.charsize=1.0
+!P.thick=1.5
+!P.charthick=1.3
 
 ; rainbow color scheme
 loadct,39
 
 ; set the plot window
-xr    =[-0.2,0.3]
+xr    =[-0.25,0.3]
 yr    =[1.4,2.2]
 xtick =['0.6','1','2','3','4','5','  6 keV','7'] ; top x-axis
 qd_setwin, xr=xr, yr=yr, range=range, xtick=xtick, stu=0.5
+
+gamma = "103B
+xyouts, -0.057, 1.42, '!4' + String(gamma) + '!X = 0', COLOR=250
+xyouts, -0.132, 1.45, '!4' + String(gamma) + '!X = 1', COLOR=250
+xyouts, -0.19, 1.51, '!4' + String(gamma) + '!X = 2', COLOR=250
+xyouts, -0.22, 1.615, '!4' + String(gamma) + '!X = 3', COLOR=250
+xyouts, -0.235, 1.717, '!4' + String(gamma) + '!X = 4', COLOR=250
+xyouts, -0.23, 1.53, '4', COLOR=80, ORIENTATION=340
 
 ; read grid data
 file_grid = '/Users/chandra/quantile_1.7/example_powerlaw_grid.rdb' ; use grid.pl to generate it

@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.pyplot import *
 from scipy.optimize import curve_fit
+from matplotlib import ticker
 
 def func(x,k,a):
 	return k*(x**-a)
@@ -19,7 +21,7 @@ class HistFit:
 		for src in content:
 			lum1.append(src)
 
-		n1,bins1,patches1=plt.hist(lum1,np.linspace(0.1,100,50),histtype='step',cumulative=-1,color='r')
+		n1,bins1,patches1=plt.hist(lum1,np.linspace(0.1,3,20),histtype='step',cumulative=-1,color='r')
 
 		bin_centers1=bins1[:-1]+0.5*(bins1[1:]-bins1[:-1])
 
@@ -48,7 +50,7 @@ class HistFit:
 		for src in content:
 		    lum.append(src)
 
-		n, bins, patches=plt.hist(lum,np.linspace(2.0,6.0,5),histtype='step',cumulative=-1)
+		n, bins, patches=plt.hist(lum,np.linspace(2.0,6.0,20),histtype='step',cumulative=-1)
 
 		bin_centers=bins[:-1]+0.5*(bins[1:]-bins[:-1])
 
@@ -66,27 +68,35 @@ class HistFit:
 		print "alpha = %s"%a
 		perr=np.sqrt(np.diag(pcov))
 		print "perr = %s"%perr
-		plt.text(1, 90, r'$\alpha = $%s$\pm$%s'%(a,perr[1]))
+		font = { 'size': 25 }
+		#plt.text(6, 8, r'$\alpha = $%.2f$\pm$%.2f'%(float(a),float(perr[1])), **font)
 
+def log_10_product(x, pos):
+	"""The two args are the value and tick position.
+	Label ticks with the product of the exponentiation"""
+	return '%1i' % (x)
 
 if __name__=='__main__':
-	titlefont = { "size": 30 }
-	axisfont = { "size": 20 }
+	fig = plt.figure()
+	ax = fig.add_subplot(1,1,1)
 	h = HistFit('padilla_flux.txt')
 	h.hist('flux_100_nhfree.txt')
 	#h.histPadilla()
 	#plt.axis([0.1,1.5,0.0,16.0])
-	axis_font = { 'size': 15 }
-	title_font = { 'size': 25 }
-	x = np.linspace(0.1,2,100)
-	y = 43.5652331909*x**(-1.49548499323)
-	plt.plot(x,y, 'b--')
+	#x = np.linspace(0.1,2,100)
+	#y = 43.5652331909*x**(-1.49548499323)
+	#plt.plot(x,y, 'b--')
 	#plt.plot([0.19,0.19],[1,1000], 'b--')
-	plt.ylim((10**0,6*10**2))
-	plt.xlim((1*10**-1,2*10**1))
+	axis_font = { 'size': 40 }
+	plt.tick_params(axis='both', which='major', labelsize=30)
+	plt.tick_params(axis='both', which='minor', labelsize=30)
+	plt.ylim((10**0,2*10**1))
+	plt.xlim((1.5*10**0,8*10**0))
 	plt.gca().set_xscale("log")
 	plt.gca().set_yscale("log")
-	plt.xlabel('Flux [$e-15\  erg/s\cdot cm^2$)]', **axis_font)
-	plt.ylabel('# of Sources >F', **axis_font)
-	plt.title('LogN-LogF of Soft Sources with Net Counts > 100 Inside 1 pc', **title_font)
+	formatter = FuncFormatter(log_10_product)
+	ax.yaxis.set_major_formatter(formatter)
+	ax.xaxis.set_minor_formatter(formatter)
+	plt.xlabel('2-8 keV Flux [$10^{-15}\  ergs\ cm^{-2}\ s^{-1}$]', **axis_font)
+	plt.ylabel('N(>F)', **axis_font)
 	plt.show()
