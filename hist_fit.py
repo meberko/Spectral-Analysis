@@ -97,6 +97,6 @@ if __name__=='__main__':
 	formatter = FuncFormatter(log_10_product)
 	ax.yaxis.set_major_formatter(formatter)
 	ax.xaxis.set_minor_formatter(formatter)
-	plt.xlabel('2-8 keV Flux [$10^{-15}\  ergs\ cm^{-2}\ s^{-1}$]', **axis_font)
-	plt.ylabel('N(>F)', **axis_font)
+	plt.xlabel('2-8 keV Flux [$10^{-15}$ erg cm$^{-2}$ s$^{-1}$]', **axis_font)
+	plt.ylabel('N(>S)', **axis_font)
 	plt.show()

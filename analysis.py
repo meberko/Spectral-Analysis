@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy import stats
 import sys,math
+from subprocess import call
 
 class Analyzer():
     def __init__(self):
@@ -167,7 +168,7 @@ class Analyzer():
                 self.data['pli'].append(-10)
 
         # Find sources with various net counts ranges
-        for i in range(0,len(self.data['chi_sqr_kT1'])):
+        for i in range(0,len(self.data['net_cts'])):
             if self.data['net_cts'][i] > 50:
                 self.data_gt_50['names'].append(self.data['names'][i])
                 self.data_gt_50['ra'].append(self.data['ra'][i])
@@ -205,7 +206,7 @@ class Analyzer():
                 self.data_gt_100['hr2_err'].append(self.data['hr2_err'][i])
                 self.data_gt_100['hr5'].append(self.data['hr5'][i])
                 self.data_gt_100['hr5_err'].append(self.data['hr5_err'][i])
-                self.data_gt_100['chi_diff'].append(self.data['chi_sqr'][i] - self.data['chi_sqr_kT1'][i])
+                #self.data_gt_100['chi_diff'].append(self.data['chi_sqr'][i] - self.data['chi_sqr_kT1'][i])
             if self.data['net_cts'][i] > 200:
                 self.data_gt_200['names'].append(self.data['names'][i])
                 self.data_gt_200['ra'].append(self.data['ra'][i])
@@ -246,7 +247,7 @@ class Analyzer():
         print('Num Sources 100 < Net Counts < 200: %d out of %d' % (len(self.data_gt_100_lt_200['hr2']), len(self.data['hr2'])))
 
     def getErrData(self):
-        with open('data_err.txt') as f:
+        with open('data_err_new.txt') as f:
             content = f.readlines()
         content = [x.strip() for x in content]
         content = [x.split() for x in content]
@@ -321,12 +322,13 @@ class Analyzer():
         # Errorbar plots
         i=0
         axis_font = {'size': 40}
+
         #plt.title('HR3 as a function of HR2 (Net Counts > 100) (Green: R<25", Red: R>25")', **title_font)
         for h in self.data_gt_100['hr2']:
             if self.data_gt_100['names'][i] not in self.undetected and self.data_gt_100['names'][i] not in self.transients:
                 if self.data_gt_100['r'][i] < 25:
-                    plt.errorbar(h, self.data_gt_100['hr5'][i],xerr=self.data_gt_100['hr2_err'][i], yerr=self.data_gt_100['hr5_err'][i], ls='None',ecolor='g')
-                    plt.scatter(h,  self.data_gt_100['hr5'][i], color='g')
+                    plt.errorbar(h, self.data_gt_100['hr5'][i],xerr=self.data_gt_100['hr2_err'][i], yerr=self.data_gt_100['hr5_err'][i], ls='None',ecolor='c')
+                    plt.scatter(h,  self.data_gt_100['hr5'][i], color='c')
                 else:
                     plt.errorbar(h,self.data_gt_100['hr5'][i],xerr=self.data_gt_100['hr2_err'][i], yerr=self.data_gt_100['hr5_err'][i], ls='None',ecolor='r')
                     plt.scatter(h, self.data_gt_100['hr5'][i], color='r')
@@ -335,6 +337,7 @@ class Analyzer():
         plt.scatter(0.66, 0.92, color='black', marker='D', s=50, zorder=2)
         plt.scatter(0.67, 0.92, color='black', marker='D', s=50, zorder=2)
         plt.scatter(0.66, 0.92, color='black', marker='D', s=50, zorder=2)
+        plt.plot([0.3,0.3],[-0.2,1.55], '--', color='gray')
         plt.axis([-0.2,1.2,-0.2,1.6])
         plt.tick_params(axis='both', which='major', labelsize=30)
     	plt.tick_params(axis='both', which='minor', labelsize=30)
@@ -374,8 +377,8 @@ class Analyzer():
 
         #plt.title('HR2 as a function of Radial Distance from Sgr A* (Net Counts > 100)', **title_font)
         plt.errorbar(p_r, p_h, yerr=p_he, ls='None', elinewidth = 3, capsize=5, markeredgewidth=3)
-        plt.axis([0,3.2,-0.4,1.2])
-        plt.plot([0,3.2], [0.48,0.48])
+        plt.axis([0,3.8,-0.4,1.2])
+        plt.plot([0.05,3.75], [0.5,0.5])
         plt.xlabel('Radial Distance from Sgr A* (pc)', **axis_font)
         plt.ylabel('HR2', **axis_font)
     	plt.tick_params(axis='both', which='major', labelsize=30)
@@ -553,7 +556,7 @@ class Analyzer():
                     else:
                         f.write(('circle(%f,%f,1") # color=red' % (self.data['ra'][i],self.data['dec'][i])))
                         f.write('\n')
-                    i+=1
+                i+=1
         i=0
         with open('hr2_gt_50.reg', 'w') as f:
             f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=3 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
@@ -568,7 +571,7 @@ class Analyzer():
                 i+=1
         i=0
         with open('hr2_gt_100.reg', 'w') as f:
-            f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=3 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
+            f.write('# Region file format: DS9 version 4.1\nglobal color=cyan dashlist=8 3 width=3 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
             for h in self.data_gt_100['hr2']:
                 if self.data_gt_100['names'][i] not in self.transients and self.data_gt_100['names'][i] not in self.undetected:
                     if h<=0.3:
@@ -633,7 +636,7 @@ class Analyzer():
             chi = 0
             j=0
             for h in self.data['hr2']:
-                chi+=(h-n)**2/(388*float(self.data['hr2_err'][j])**2)
+                chi+=(h-n)**2/(414*float(self.data['hr2_err'][j])**2)
                 j+=1
             plt.scatter(n,chi)
             print(('Constant HR2: %f, Chi Sqr: %f')%(n,chi))
@@ -676,10 +679,8 @@ class Analyzer():
             i=0
             for h in self.data_gt_50['hr2']:
                 if h > 0.3:
-                    f.write(('%s\t%f\t%f\t%f\t%f\t%f\n')%(  self.data_gt_50['names'][i],
+                    f.write(('%s\t%f\t%f\t%f\n')%(  self.data_gt_50['names'][i],
                                                         self.data_gt_50['r'][i],
-                                                        self.data_gt_50['ra'][i],
-                                                        self.data_gt_50['dec'][i],
                                                         self.data_gt_50['net_cts'][i],
                                                         self.data_gt_50['hr2'][i]))
                 i+=1
@@ -907,14 +908,15 @@ if __name__ == '__main__':
     a = Analyzer()
     a.softHardCounting()
     a.normalizedCounting()
-    a.printHardGT50()
+    #a.printHardGT50()
     #a.printGT50()
+    #a.printHardGT50()
     #a.printGT100()
-    #a.printInside25GT100()
+    a.printInside25GT100()
     #a.printOutside25GT100()
     #a.pliAvgCalculations()
-    a.makeReg()
+    #a.makeReg()
     #a.printSoftGT100()
     #a.runFlatChiSqrTest()
-    #a.runKSTest()
+    a.runKSTest()
     a.plot()
