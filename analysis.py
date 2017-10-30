@@ -312,7 +312,7 @@ class Analyzer():
         plt.ylabel('Frequency', **axis_font)
     	plt.tick_params(axis='both', which='major', labelsize=30)
     	plt.tick_params(axis='both', which='minor', labelsize=30)
-        plt.text(-1, 8, r'r<1 pc', fontsize=20)
+        plt.text(-1, 7.5, r'r<1 pc', fontsize=25)
 
         plt.subplot(1,2,2)
         #plt.title('Sources > 1 pc from Sgr A*', **title_font)
@@ -321,7 +321,7 @@ class Analyzer():
         plt.ylabel('Frequency', **axis_font)
     	plt.tick_params(axis='both', which='major', labelsize=30)
     	plt.tick_params(axis='both', which='minor', labelsize=30)
-        plt.text(-1, 30, r'r>1 pc', fontsize=20)
+        plt.text(-1, 27.5, r'r>1 pc', fontsize=25)
 
         plt.show()
         plt.figure()
@@ -384,7 +384,7 @@ class Analyzer():
         #plt.title('HR2 as a function of Radial Distance from Sgr A* (Net Counts > 100)', **title_font)
         plt.errorbar(p_r, p_h, yerr=p_he, ls='None', elinewidth = 3, capsize=5, markeredgewidth=3)
         plt.axis([0,3.8,-0.4,1.2])
-        plt.plot([0.05,3.75], [0.5,0.5])
+        plt.plot([0.05,3.75], [0.54,0.54])
         plt.xlabel('Radial Distance from Sgr A* (pc)', **axis_font)
         plt.ylabel('HR2', **axis_font)
     	plt.tick_params(axis='both', which='major', labelsize=30)
@@ -578,8 +578,14 @@ class Analyzer():
         i=0
         with open('hr2_gt_100.reg', 'w') as f:
             f.write('# Region file format: DS9 version 4.1\nglobal color=cyan dashlist=8 3 width=3 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
+            count = 0
+            count_gt = 0
+            count_lt = 0
             for h in self.data_gt_100['hr2']:
                 if self.data_gt_100['names'][i] not in self.transients and self.data_gt_100['names'][i] not in self.undetected:
+                    count+=1
+                    if self.data_gt_100['r'][i]<25.8:
+                        count_gt+=1
                     if h<=0.3:
                         f.write(('circle(%f,%f,1")' % (self.data_gt_100['ra'][i],self.data_gt_100['dec'][i])))
                         f.write('\n')
@@ -587,6 +593,9 @@ class Analyzer():
                         f.write(('circle(%f,%f,1") # color=red' % (self.data_gt_100['ra'][i],self.data_gt_100['dec'][i])))
                         f.write('\n')
                 i+=1
+            print count
+            print count_gt
+            print count-count_gt
         i=0
         with open('hr2_gt_200.reg', 'w') as f:
             f.write('# Region file format: DS9 version 4.1\nglobal color=green dashlist=8 3 width=3 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1\nfk5\n')
@@ -713,6 +722,7 @@ class Analyzer():
         for n in np.linspace(0.1,2,191):
             chi = 0
             j=0
+            sys = 1
             num_used = 0
             for h in self.data_gt_100['hr2']:
                 if float(self.data_gt_100['r'][j]) > 25.8:
@@ -1000,7 +1010,7 @@ if __name__ == '__main__':
     #a.pliAvgCalculations()
     #a.makeReg()
     #a.printSoftGT100()
-    a.runFlatChiSqrTest()
-    a.runFlatChiSqrTestRGt1()
+    #a.runFlatChiSqrTest()
+    #a.runFlatChiSqrTestRGt1()
     #a.runKSTest()
     a.plot()
