@@ -7,7 +7,8 @@ from subprocess import call
 class Analyzer():
     def __init__(self):
         self.transients = ['174540.98-290014.3', '174540.07-290005.7', '174540.04-290030.9', '174538.07-290022.4']
-        self.undetected = ['174534.89-290040.6','174544.65-290020.1','174542.53-285933.4','174542.25-285932.3','174538.45-290103.7', '174537.29-290026.2', '174537.55-290029.4', '174541.39-290002.8', '174540.64-290033.3', '174540.33-290039.4', '174538.91-290009.5', '174540.83-290002.8', '174540.04-290028.1','174539.78-290029.5','174540.15-290025.9','174539.71-290026.4', '174539.51-290039.4', '174537.98-290134.5', '174544.57-290000.6']
+        self.undetected = ['174534.89-290040.6','174544.65-290020.1','174542.53-285933.4','174542.25-285932.3','174538.45-290103.7', '174537.29-290026.2', '174537.55-290029.4', '174541.39-290002.8', '174540.64-290033.3', '174540.33-290039.4', '174538.91-290009.5', '174540.83-290002.8', '174540.04-290028.1','174539.78-290029.5','174540.15-290025.9','174539.71-290026.4', '174539.51-290039.4', '174544.57-290000.6', '174537.98-290134.5', '174540.20-285900.8']
+        self.undetected_without_outliers = ['174534.89-290040.6','174544.65-290020.1','174542.53-285933.4','174542.25-285932.3','174538.45-290103.7', '174537.29-290026.2', '174537.55-290029.4', '174541.39-290002.8', '174540.64-290033.3', '174540.33-290039.4', '174538.91-290009.5', '174540.83-290002.8', '174540.04-290028.1','174539.78-290029.5','174540.15-290025.9','174539.71-290026.4', '174539.51-290039.4', '174544.57-290000.6']
         self.axis_font = {'size':20}
         self.title_font = {'size':30}
         self.data = {}
@@ -199,10 +200,11 @@ class Analyzer():
                 self.data_gt_100['net_cts'].append(self.data['net_cts'][i])
                 self.data_gt_100['net_cts_err'].append(self.data['net_cts_sigma_up'][i])
                 self.data_gt_100['hr2'].append(self.data['hr2'][i])
-                if self.data['r'][i] < 25:
-                    self.data_gt_100['hr2_r_lt_25'].append(self.data['hr2'][i])
-                if self.data['r'][i] > 25:
-                    self.data_gt_100['hr2_r_gt_25'].append(self.data['hr2'][i])
+                if self.data['names'][i] not in self.transients and self.data['names'][i] not in self.undetected_without_outliers:
+                    if self.data['r'][i] < 25.8:
+                        self.data_gt_100['hr2_r_lt_25'].append(self.data['hr2'][i])
+                    if self.data['r'][i] > 25.8:
+                        self.data_gt_100['hr2_r_gt_25'].append(self.data['hr2'][i])
                 self.data_gt_100['hr2_err'].append(self.data['hr2_err'][i])
                 self.data_gt_100['hr5'].append(self.data['hr5'][i])
                 self.data_gt_100['hr5_err'].append(self.data['hr5_err'][i])
@@ -299,6 +301,8 @@ class Analyzer():
         plt.ylabel('Frequency')
         #plt.axis([0,10,0,50])
         """
+        print len(self.data_gt_100['hr2_r_lt_25'])
+        print len(self.data_gt_100['hr2_r_gt_25'])
         axis_font = { 'size': 40}
 
         plt.subplot(1,2,1)
@@ -308,6 +312,7 @@ class Analyzer():
         plt.ylabel('Frequency', **axis_font)
     	plt.tick_params(axis='both', which='major', labelsize=30)
     	plt.tick_params(axis='both', which='minor', labelsize=30)
+        plt.text(-1, 8, r'r<1 pc', fontsize=20)
 
         plt.subplot(1,2,2)
         #plt.title('Sources > 1 pc from Sgr A*', **title_font)
@@ -316,6 +321,7 @@ class Analyzer():
         plt.ylabel('Frequency', **axis_font)
     	plt.tick_params(axis='both', which='major', labelsize=30)
     	plt.tick_params(axis='both', which='minor', labelsize=30)
+        plt.text(-1, 30, r'r>1 pc', fontsize=20)
 
         plt.show()
         plt.figure()
@@ -622,8 +628,9 @@ class Analyzer():
         ks1 = []
         ks2 = []
         i=0
-        for h in self.data_gt_50['hr2']:
-            if self.data_gt_50['r'][i] < 25:
+        for h in self.data_gt_100['hr2']:
+            #if h > -0.3:
+            if self.data_gt_100['r'][i] < 25:
                 ks1.append(h)
             else:
                 ks2.append(h)
@@ -635,11 +642,87 @@ class Analyzer():
         for n in np.linspace(0.1,2,191):
             chi = 0
             j=0
-            for h in self.data['hr2']:
-                chi+=(h-n)**2/(414*float(self.data['hr2_err'][j])**2)
+            num=0
+            for h in self.data_gt_100['hr2']:
+                if self.data_gt_100['names'][j] not in self.transients and self.data_gt_100['names'][j] not in self.undetected:
+                    chi+=(h-n)**2/(float(self.data_gt_100['hr2_err'][j])**2+0.002)
+                    num+=1
                 j+=1
+            chi = chi / (num-1)
             plt.scatter(n,chi)
             print(('Constant HR2: %f, Chi Sqr: %f')%(n,chi))
+        plt.show()
+
+    def runFlatChiSqrTestRGt1(self):
+        plt.figure()
+        sigma_tot_sqr = 0
+        sigma_stat_sqr = 0
+        avg = 0
+        hr2_err_avg = 0
+        num = 0
+
+        # Get average
+        j = 0
+        for h in self.data_gt_100['hr2']:
+            if float(self.data_gt_100['r'][j]) > 25.8:
+                if float(self.data_gt_100['hr2'][j])>-0.3:
+                    if self.data_gt_100['names'][j] not in self.transients and self.data_gt_100['names'][j] not in self.undetected:
+                        avg+=h
+                        num+=1
+            j+=1
+        print num
+        avg = avg/num
+
+        # Get average
+        j = 0
+        for h in self.data_gt_100['hr2']:
+            if float(self.data_gt_100['r'][j]) > 25.8:
+                if float(self.data_gt_100['hr2'][j])>-0.3:
+                    if self.data_gt_100['names'][j] not in self.transients and self.data_gt_100['names'][j] not in self.undetected:
+                        hr2_err_avg+=self.data_gt_100['hr2_err'][j]
+            j+=1
+        hr2_err_avg = hr2_err_avg/num
+
+        # Get (sigma_tot_sqr)^2
+        j=0
+        for h in self.data_gt_100['hr2']:
+            if float(self.data_gt_100['r'][j]) > 25.8:
+                if float(self.data_gt_100['hr2'][j])>-0.3:
+                    if self.data_gt_100['names'][j] not in self.transients and self.data_gt_100['names'][j] not in self.undetected:
+                        sigma_tot_sqr+=(h-avg)**2
+            j+=1
+        sigma_tot_sqr = sigma_tot_sqr/(num-1)
+        print('sigma_tot_sqr: %f'%sigma_tot_sqr)
+
+        # Get sigma_stat
+        j=0
+        for h in self.data_gt_100['hr2']:
+            if float(self.data_gt_100['r'][j]) > 25.8:
+                if float(self.data_gt_100['hr2'][j])>-0.3:
+                    if self.data_gt_100['hr2_err'][j]<1000:
+                        if self.data_gt_100['names'][j] not in self.transients and self.data_gt_100['names'][j] not in self.undetected:
+                            sigma_stat_sqr+=self.data_gt_100['hr2_err'][j]**2
+            j+=1
+        sigma_stat_sqr = sigma_stat_sqr/(num-1)
+        print('sigma_stat_sqr: %f'%sigma_stat_sqr)
+
+        sigma_sys_sqr = sigma_tot_sqr - sigma_stat_sqr
+        print('sigma_sys_sqr: %f'%sigma_sys_sqr)
+
+        # Chi sqr calculation
+        for n in np.linspace(0.1,2,191):
+            chi = 0
+            j=0
+            num_used = 0
+            for h in self.data_gt_100['hr2']:
+                if float(self.data_gt_100['r'][j]) > 25.8:
+                    if float(self.data_gt_100['hr2'][j])>-0.3:
+                        if self.data_gt_100['names'][j] not in self.transients and self.data_gt_100['names'][j] not in self.undetected:
+                            num_used+=1
+                            chi+=(h-n)**2/(float(self.data_gt_100['hr2_err'][j])**2+0.002)
+                j+=1
+            plt.scatter(n,chi/(num_used-1))
+            print(('Constant HR2: %f, Reduced Chi Sqr: %f')%(n,chi/(num_used-1)))
         plt.show()
 
     def printGT50(self):
@@ -912,11 +995,12 @@ if __name__ == '__main__':
     #a.printGT50()
     #a.printHardGT50()
     #a.printGT100()
-    a.printInside25GT100()
+    #a.printInside25GT100()
     #a.printOutside25GT100()
     #a.pliAvgCalculations()
     #a.makeReg()
     #a.printSoftGT100()
-    #a.runFlatChiSqrTest()
-    a.runKSTest()
+    a.runFlatChiSqrTest()
+    a.runFlatChiSqrTestRGt1()
+    #a.runKSTest()
     a.plot()
