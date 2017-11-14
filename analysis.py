@@ -247,6 +247,14 @@ class Analyzer():
         print('Num Sources Net Counts > 200: %d out of %d' % (len(self.data_gt_200['hr2']), len(self.data['hr2'])))
         print('Num Sources Net Counts < 100: %d out of %d' % (len(self.data_lt_100['hr2']), len(self.data['hr2'])))
         print('Num Sources 100 < Net Counts < 200: %d out of %d' % (len(self.data_gt_100_lt_200['hr2']), len(self.data['hr2'])))
+        count = 0
+        j=0
+        for r in self.data_gt_200['r']:
+            if r>25.8:
+                if self.data_gt_200['names'][j] not in self.undetected:
+                    count+=1
+            j+=1
+        print count
 
     def getErrData(self):
         with open('data_err_new.txt') as f:
@@ -264,6 +272,81 @@ class Analyzer():
 
     def plot(self):
         # LOTS of plotting
+        plt.figure(figsize=(7.2,5), dpi=300)
+
+        # Histogram
+        #plt.title('Sources < 1 pc from Sgr A*', **title_font)
+        axis_font = { 'size': 7 }
+        plt.subplot(1,2,1)
+        plt.hist(self.data_gt_100['hr2_r_lt_25'], np.linspace(-1,1,11), rwidth=0.9)
+        plt.xlabel('HR2', **axis_font)
+        plt.ylabel('Frequency', **axis_font)
+    	plt.tick_params(axis='both', which='major', labelsize=7)
+    	plt.tick_params(axis='both', which='minor', labelsize=7)
+        plt.text(-1, 7.5, r'r<1 pc', fontsize=7)
+        plt.text(-1.45, 8.1, r'a', fontsize=8, weight='bold')
+
+        #plt.title('Sources > 1 pc from Sgr A*', **title_font)
+        plt.subplot(1,2,2)
+        plt.hist(self.data_gt_100['hr2_r_gt_25'], np.linspace(-1,1,11), rwidth=0.9)
+        plt.xlabel('HR2', **axis_font)
+        plt.ylabel('Frequency', **axis_font)
+    	plt.tick_params(axis='both', which='major', labelsize=7)
+    	plt.tick_params(axis='both', which='minor', labelsize=7)
+        plt.text(-1, 28.15, r'r>1 pc', fontsize=7)
+        plt.text(-1.45, 30.43, r'b', fontsize=8, weight='bold')
+
+        plt.savefig('Figure_1.eps', dpi=300, format='eps', bbox_inches='tight')
+        plt.savefig('Figure_1.svg', dpi=300, format='svg', bbox_inches='tight')
+        plt.savefig('Figure_1.pdf', dpi=300, format='pdf', bbox_inches='tight')
+        plt.show()
+
+        # Errorbar plots
+        plt.figure()
+        i=0
+        #plt.title('HR3 as a function of HR2 (Net Counts > 100) (Green: R<25", Red: R>25")', **title_font)
+        for h in self.data_gt_100['hr2']:
+            if self.data_gt_100['names'][i] not in self.undetected and self.data_gt_100['names'][i] not in self.transients:
+                if self.data_gt_100['r'][i] < 25:
+                    plt.errorbar(h, self.data_gt_100['hr5'][i],xerr=self.data_gt_100['hr2_err'][i], yerr=self.data_gt_100['hr5_err'][i], ls='None',ecolor='c')
+                    plt.scatter(h,  self.data_gt_100['hr5'][i], color='c')
+                else:
+                    plt.errorbar(h,self.data_gt_100['hr5'][i],xerr=self.data_gt_100['hr2_err'][i], yerr=self.data_gt_100['hr5_err'][i], ls='None',ecolor='r')
+                    plt.scatter(h, self.data_gt_100['hr5'][i], color='r')
+            i+=1
+        plt.scatter(0.65, 0.91, color='black', marker='D', s=50, zorder=2)
+        plt.scatter(0.66, 0.92, color='black', marker='D', s=50, zorder=2)
+        plt.scatter(0.67, 0.92, color='black', marker='D', s=50, zorder=2)
+        plt.scatter(0.66, 0.92, color='black', marker='D', s=50, zorder=2)
+        plt.plot([0.3,0.3],[-0.2,1.55], '--', color='gray')
+        plt.axis([-0.2,1.2,-0.2,1.6])
+        plt.tick_params(axis='both', which='major', labelsize=7)
+    	plt.tick_params(axis='both', which='minor', labelsize=7)
+        plt.xlabel('HR2', **axis_font)
+        plt.ylabel('HR3', **axis_font)
+        plt.figure()
+
+        # HR2(r) plot
+        i=0
+        p_r=[]
+        p_h=[]
+        p_he = []
+        for x in self.data_gt_100['r']:
+            if x > 5:
+                p_r.append(x/25.8)
+                p_h.append(self.data_gt_100['hr2'][i])
+                p_he.append(self.data_gt_100['hr2_err'][i])
+            i+=1
+
+        #plt.title('HR2 as a function of Radial Distance from Sgr A* (Net Counts > 100)', **title_font)
+        plt.errorbar(p_r, p_h, yerr=p_he, ls='None', elinewidth = 3, capsize=5, markeredgewidth=3)
+        plt.axis([0,3.8,-0.4,1.2])
+        plt.plot([0.05,3.75], [0.54,0.54])
+        plt.xlabel('Radial Distance from Sgr A* (pc)', **axis_font)
+        plt.ylabel('HR2', **axis_font)
+    	plt.tick_params(axis='both', which='major', labelsize=7)
+    	plt.tick_params(axis='both', which='minor', labelsize=7)
+
         plt.figure()
 
         """
@@ -300,59 +383,7 @@ class Analyzer():
         plt.xlabel('PLI')
         plt.ylabel('Frequency')
         #plt.axis([0,10,0,50])
-        """
-        print len(self.data_gt_100['hr2_r_lt_25'])
-        print len(self.data_gt_100['hr2_r_gt_25'])
-        axis_font = { 'size': 40}
 
-        plt.subplot(1,2,1)
-        #plt.title('Sources < 1 pc from Sgr A*', **title_font)
-        plt.hist(self.data_gt_100['hr2_r_lt_25'], np.linspace(-1,1,11), rwidth=0.9)
-        plt.xlabel('HR2', **axis_font)
-        plt.ylabel('Frequency', **axis_font)
-    	plt.tick_params(axis='both', which='major', labelsize=30)
-    	plt.tick_params(axis='both', which='minor', labelsize=30)
-        plt.text(-1, 7.5, r'r<1 pc', fontsize=25)
-
-        plt.subplot(1,2,2)
-        #plt.title('Sources > 1 pc from Sgr A*', **title_font)
-        plt.hist(self.data_gt_100['hr2_r_gt_25'], np.linspace(-1,1,11), rwidth=0.9)
-        plt.xlabel('HR2', **axis_font)
-        plt.ylabel('Frequency', **axis_font)
-    	plt.tick_params(axis='both', which='major', labelsize=30)
-    	plt.tick_params(axis='both', which='minor', labelsize=30)
-        plt.text(-1, 27.5, r'r>1 pc', fontsize=25)
-
-        plt.show()
-        plt.figure()
-        # Errorbar plots
-        i=0
-        axis_font = {'size': 40}
-
-        #plt.title('HR3 as a function of HR2 (Net Counts > 100) (Green: R<25", Red: R>25")', **title_font)
-        for h in self.data_gt_100['hr2']:
-            if self.data_gt_100['names'][i] not in self.undetected and self.data_gt_100['names'][i] not in self.transients:
-                if self.data_gt_100['r'][i] < 25:
-                    plt.errorbar(h, self.data_gt_100['hr5'][i],xerr=self.data_gt_100['hr2_err'][i], yerr=self.data_gt_100['hr5_err'][i], ls='None',ecolor='c')
-                    plt.scatter(h,  self.data_gt_100['hr5'][i], color='c')
-                else:
-                    plt.errorbar(h,self.data_gt_100['hr5'][i],xerr=self.data_gt_100['hr2_err'][i], yerr=self.data_gt_100['hr5_err'][i], ls='None',ecolor='r')
-                    plt.scatter(h, self.data_gt_100['hr5'][i], color='r')
-            i+=1
-        plt.scatter(0.65, 0.91, color='black', marker='D', s=50, zorder=2)
-        plt.scatter(0.66, 0.92, color='black', marker='D', s=50, zorder=2)
-        plt.scatter(0.67, 0.92, color='black', marker='D', s=50, zorder=2)
-        plt.scatter(0.66, 0.92, color='black', marker='D', s=50, zorder=2)
-        plt.plot([0.3,0.3],[-0.2,1.55], '--', color='gray')
-        plt.axis([-0.2,1.2,-0.2,1.6])
-        plt.tick_params(axis='both', which='major', labelsize=30)
-    	plt.tick_params(axis='both', which='minor', labelsize=30)
-        plt.xlabel('HR2', **axis_font)
-        plt.ylabel('HR3', **axis_font)
-        plt.show()
-        plt.figure()
-
-        """
         plt.title('HR2 as a function of Net Counts (Net Counts > 100)')
         plt.errorbar(self.data_gt_100['net_cts'],self.data_gt_100['hr2'],xerr=self.data_gt_100['net_cts_err'], yerr=self.data_gt_100['hr2_err'], ls='None')
         plt.axis([90,1500,-0.4,1.2])
@@ -367,32 +398,7 @@ class Analyzer():
         plt.axis([0,90,-1.0,2.0])
         plt.xlabel('Radius (")')
         plt.ylabel('PLI')
-        """
 
-        i=0
-        p_r=[]
-        p_h=[]
-        p_he = []
-        for x in self.data_gt_100['r']:
-            if x > 5:
-                p_r.append(x/25.8)
-                p_h.append(self.data_gt_100['hr2'][i])
-                p_he.append(self.data_gt_100['hr2_err'][i])
-            i+=1
-        axis_font = { 'size': 40}
-
-        #plt.title('HR2 as a function of Radial Distance from Sgr A* (Net Counts > 100)', **title_font)
-        plt.errorbar(p_r, p_h, yerr=p_he, ls='None', elinewidth = 3, capsize=5, markeredgewidth=3)
-        plt.axis([0,3.8,-0.4,1.2])
-        plt.plot([0.05,3.75], [0.54,0.54])
-        plt.xlabel('Radial Distance from Sgr A* (pc)', **axis_font)
-        plt.ylabel('HR2', **axis_font)
-    	plt.tick_params(axis='both', which='major', labelsize=30)
-    	plt.tick_params(axis='both', which='minor', labelsize=30)
-
-        plt.show()
-        plt.figure()
-        """
         # Scatter plots
         plt.title('Detection Threshold As Function of Net Counts')
         plt.scatter(self.data['net_cts'], self.data['src_sig'])
@@ -483,7 +489,6 @@ class Analyzer():
         plt.ylabel('Chi Sqr')
         """
 
-        plt.show()
 
     def makeReg(self):
         i=0
