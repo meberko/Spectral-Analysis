@@ -302,7 +302,7 @@ class Analyzer():
         plt.show()
 
         # Errorbar plots
-        plt.figure()
+        plt.figure(figsize=(7.2,5), dpi=300)
         i=0
         #plt.title('HR3 as a function of HR2 (Net Counts > 100) (Green: R<25", Red: R>25")', **title_font)
         for h in self.data_gt_100['hr2']:
@@ -324,9 +324,13 @@ class Analyzer():
     	plt.tick_params(axis='both', which='minor', labelsize=7)
         plt.xlabel('HR2', **axis_font)
         plt.ylabel('HR3', **axis_font)
-        plt.figure()
+        plt.savefig('Extended_Data_Figure_4.eps', dpi=300, format='eps', bbox_inches='tight')
+        plt.savefig('Extended_Data_Figure_4.svg', dpi=300, format='svg', bbox_inches='tight')
+        plt.savefig('Extended_Data_Figure_4.pdf', dpi=300, format='pdf', bbox_inches='tight')
+        plt.show()
 
         # HR2(r) plot
+        plt.figure(figsize=(7.2,5), dpi=300)
         i=0
         p_r=[]
         p_h=[]
@@ -346,6 +350,10 @@ class Analyzer():
         plt.ylabel('HR2', **axis_font)
     	plt.tick_params(axis='both', which='major', labelsize=7)
     	plt.tick_params(axis='both', which='minor', labelsize=7)
+        plt.savefig('Extended_Data_Figure_3.eps', dpi=300, format='eps', bbox_inches='tight')
+        plt.savefig('Extended_Data_Figure_3.svg', dpi=300, format='svg', bbox_inches='tight')
+        plt.savefig('Extended_Data_Figure_3.pdf', dpi=300, format='pdf', bbox_inches='tight')
+        plt.show()
 
         plt.figure()
 
