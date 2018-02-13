@@ -257,7 +257,7 @@ class Analyzer():
         print count
 
     def getErrData(self):
-        with open('rerun_data.txt') as f:
+        with open('rerun_data_1.txt') as f:
             content = f.readlines()
         content = [x.strip() for x in content]
         content = [x.split() for x in content]
