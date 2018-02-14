@@ -283,8 +283,10 @@ class Analyzer():
         plt.ylabel('Frequency', **axis_font)
     	plt.tick_params(axis='both', which='major', labelsize=7)
     	plt.tick_params(axis='both', which='minor', labelsize=7)
-        plt.text(-1, 7.5, r'r<1 pc', fontsize=7)
-        plt.text(-1.45, 8.1, r'a', fontsize=8, weight='bold')
+        #plt.text(-1, 7.5, r'r<1 pc', fontsize=7)
+        #plt.text(-1.45, 8.1, r'a', fontsize=8, weight='bold')
+        plt.text(-1, 8.5, r'r<1 pc', fontsize=7)
+        plt.text(-1.45, 9.1, r'a', fontsize=8, weight='bold')
 
         #plt.title('Sources > 1 pc from Sgr A*', **title_font)
         plt.subplot(1,2,2)
@@ -327,7 +329,7 @@ class Analyzer():
         plt.savefig('Extended_Data_Figure_4.eps', dpi=300, format='eps', bbox_inches='tight')
         plt.savefig('Extended_Data_Figure_4.svg', dpi=300, format='svg', bbox_inches='tight')
         plt.savefig('Extended_Data_Figure_4.pdf', dpi=300, format='pdf', bbox_inches='tight')
-        plt.show()
+        #plt.show()
 
         # HR2(r) plot
         plt.figure(figsize=(7.2,5), dpi=300)
@@ -353,7 +355,7 @@ class Analyzer():
         plt.savefig('Extended_Data_Figure_3.eps', dpi=300, format='eps', bbox_inches='tight')
         plt.savefig('Extended_Data_Figure_3.svg', dpi=300, format='svg', bbox_inches='tight')
         plt.savefig('Extended_Data_Figure_3.pdf', dpi=300, format='pdf', bbox_inches='tight')
-        plt.show()
+        #plt.show()
 
         plt.figure()
 
