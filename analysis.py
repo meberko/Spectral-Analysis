@@ -298,6 +298,7 @@ class Analyzer():
         plt.text(-1, 28.15, r'r>1 pc', fontsize=7)
         plt.text(-1.45, 30.43, r'b', fontsize=8, weight='bold')
 
+        plt.savefig('Figure_1.png', dpi=300, format='png', bbox_inches='tight')
         plt.savefig('Figure_1.eps', dpi=300, format='eps', bbox_inches='tight')
         plt.savefig('Figure_1.svg', dpi=300, format='svg', bbox_inches='tight')
         plt.savefig('Figure_1.pdf', dpi=300, format='pdf', bbox_inches='tight')
@@ -326,6 +327,7 @@ class Analyzer():
     	plt.tick_params(axis='both', which='minor', labelsize=7)
         plt.xlabel('HR2', **axis_font)
         plt.ylabel('HR3', **axis_font)
+        plt.savefig('Extended_Data_Figure_4.png', dpi=300, format='png', bbox_inches='tight')
         plt.savefig('Extended_Data_Figure_4.eps', dpi=300, format='eps', bbox_inches='tight')
         plt.savefig('Extended_Data_Figure_4.svg', dpi=300, format='svg', bbox_inches='tight')
         plt.savefig('Extended_Data_Figure_4.pdf', dpi=300, format='pdf', bbox_inches='tight')
@@ -352,6 +354,7 @@ class Analyzer():
         plt.ylabel('HR2', **axis_font)
     	plt.tick_params(axis='both', which='major', labelsize=7)
     	plt.tick_params(axis='both', which='minor', labelsize=7)
+        plt.savefig('Extended_Data_Figure_3.png', dpi=300, format='png', bbox_inches='tight')
         plt.savefig('Extended_Data_Figure_3.eps', dpi=300, format='eps', bbox_inches='tight')
         plt.savefig('Extended_Data_Figure_3.svg', dpi=300, format='svg', bbox_inches='tight')
         plt.savefig('Extended_Data_Figure_3.pdf', dpi=300, format='pdf', bbox_inches='tight')
