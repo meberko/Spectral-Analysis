@@ -311,10 +311,10 @@ class Analyzer():
         for h in self.data_gt_100['hr2']:
             if self.data_gt_100['names'][i] not in self.undetected and self.data_gt_100['names'][i] not in self.transients:
                 if self.data_gt_100['r'][i] < 25:
-                    plt.errorbar(h, self.data_gt_100['hr5'][i],xerr=self.data_gt_100['hr2_err'][i], yerr=self.data_gt_100['hr5_err'][i], ls='None',ecolor='c')
+                    plt.errorbar(h, self.data_gt_100['hr5'][i],xerr=self.data_gt_100['hr2_err'][i], yerr=self.data_gt_100['hr5_err'][i], ls='None',ecolor='c', elinewidth = 1)
                     plt.scatter(h,  self.data_gt_100['hr5'][i], color='c')
                 else:
-                    plt.errorbar(h,self.data_gt_100['hr5'][i],xerr=self.data_gt_100['hr2_err'][i], yerr=self.data_gt_100['hr5_err'][i], ls='None',ecolor='r')
+                    plt.errorbar(h,self.data_gt_100['hr5'][i],xerr=self.data_gt_100['hr2_err'][i], yerr=self.data_gt_100['hr5_err'][i], ls='None',ecolor='r', elinewidth = 1)
                     plt.scatter(h, self.data_gt_100['hr5'][i], color='r')
             i+=1
         plt.scatter(0.65, 0.91, color='black', marker='D', s=50, zorder=2)
@@ -331,7 +331,7 @@ class Analyzer():
         plt.savefig('Extended_Data_Figure_4.eps', dpi=300, format='eps', bbox_inches='tight')
         plt.savefig('Extended_Data_Figure_4.svg', dpi=300, format='svg', bbox_inches='tight')
         plt.savefig('Extended_Data_Figure_4.pdf', dpi=300, format='pdf', bbox_inches='tight')
-        #plt.show()
+        plt.show()
 
         # HR2(r) plot
         plt.figure(figsize=(7.2,5), dpi=300)
@@ -347,7 +347,7 @@ class Analyzer():
             i+=1
 
         #plt.title('HR2 as a function of Radial Distance from Sgr A* (Net Counts > 100)', **title_font)
-        plt.errorbar(p_r, p_h, yerr=p_he, ls='None', elinewidth = 3, capsize=5, markeredgewidth=3)
+        plt.errorbar(p_r, p_h, yerr=p_he, ls='None', elinewidth = 1, capsize=1, markeredgewidth=1)
         plt.axis([0,3.8,-0.4,1.2])
         plt.plot([0.05,3.75], [0.54,0.54])
         plt.xlabel('Radial Distance from Sgr A* (pc)', **axis_font)
@@ -358,7 +358,7 @@ class Analyzer():
         plt.savefig('Extended_Data_Figure_3.eps', dpi=300, format='eps', bbox_inches='tight')
         plt.savefig('Extended_Data_Figure_3.svg', dpi=300, format='svg', bbox_inches='tight')
         plt.savefig('Extended_Data_Figure_3.pdf', dpi=300, format='pdf', bbox_inches='tight')
-        #plt.show()
+        plt.show()
 
         plt.figure()
 
@@ -1030,5 +1030,5 @@ if __name__ == '__main__':
     #a.printSoftGT100()
     #a.runFlatChiSqrTest()
     #a.runFlatChiSqrTestRGt1()
-    #a.runKSTest()
+    a.runKSTest()
     a.plot()
