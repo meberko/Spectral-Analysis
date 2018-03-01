@@ -766,7 +766,7 @@ class Analyzer():
         with open('sources_nc_gt_100.txt', 'w') as f:
             i=0
             for r in self.data_gt_100['r']:
-                if self.data_gt_100['src_sig'][i] > 7:
+                if self.data_gt_100['names'][i] not in self.transients and self.data_gt_100['names'][i] not in self.undetected_without_outliers:
                     f.write(self.data_gt_100['names'][i]+' '+str(self.data_gt_100['src_sig'][i])+'\n')
                 i+=1
 
@@ -774,16 +774,36 @@ class Analyzer():
         with open('sources_lt_25_nc_gt_100.txt', 'w') as f:
             i=0
             for r in self.data_gt_100['r']:
-                if r < 25:
-                    f.write(self.data_gt_100['names'][i]+' '+str(self.data_gt_100['hr2'][i])+'\n')
+                if r < 25.8:
+                    if self.data_gt_100['names'][i] not in self.transients and self.data_gt_100['names'][i] not in self.undetected_without_outliers:
+                        f.write(self.data_gt_100['names'][i]+' '+str(self.data_gt_100['hr2'][i])+'\n')
+                i+=1
+
+    def printInside25GT200(self):
+        with open('sources_lt_25_nc_gt_200.txt', 'w') as f:
+            i=0
+            for r in self.data_gt_200['r']:
+                if r < 25.8:
+                    if self.data_gt_200['names'][i] not in self.transients and self.data_gt_200['names'][i] not in self.undetected_without_outliers:
+                        f.write(self.data_gt_200['names'][i]+' '+str(self.data_gt_200['hr2'][i])+'\n')
                 i+=1
 
     def printOutside25GT100(self):
         with open('sources_gt_25_nc_gt_100.txt', 'w') as f:
             i=0
             for r in self.data_gt_100['r']:
-                if r > 25:
-                    f.write(self.data_gt_100['names'][i]+'\n')
+                if r > 25.8:
+                    if self.data_gt_100['names'][i] not in self.transients and self.data_gt_100['names'][i] not in self.undetected_without_outliers:
+                        f.write(self.data_gt_100['names'][i]+'\n')
+                i+=1
+
+    def printOutside25GT200(self):
+        with open('sources_gt_25_nc_gt_200.txt', 'w') as f:
+            i=0
+            for r in self.data_gt_200['r']:
+                if r > 25.8:
+                    if self.data_gt_200['names'][i] not in self.transients and self.data_gt_200['names'][i] not in self.undetected_without_outliers:
+                        f.write(self.data_gt_200['names'][i]+' '+str(self.data_gt_200['hr2'][i])+'\n')
                 i+=1
 
     def printHardGT50(self):
@@ -1022,7 +1042,7 @@ class Analyzer():
             if name in self.soft_sources:
                 print ('%s\t%f\t%f\t%f')%(name, self.data['r'][i]/25.8, self.data['net_cts'][i], self.data['src_sig'][i])
             i+=1
-            
+
 if __name__ == '__main__':
     a = Analyzer()
     a.softHardCounting()
@@ -1030,14 +1050,16 @@ if __name__ == '__main__':
     #a.printHardGT50()
     #a.printGT50()
     #a.printHardGT50()
-    #a.printGT100()
-    #a.printInside25GT100()
-    #a.printOutside25GT100()
+    a.printGT100()
+    a.printInside25GT100()
+    a.printInside25GT200()
+    a.printOutside25GT100()
+    a.printOutside25GT200()
     #a.pliAvgCalculations()
     #a.makeReg()
     #a.printSoftGT100()
     #a.runFlatChiSqrTest()
     #a.runFlatChiSqrTestRGt1()
-    a.runKSTest()
+    #a.runKSTest()
     #a.plot()
     #a.printSoftSourceInfo()

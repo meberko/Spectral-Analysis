@@ -77,7 +77,7 @@ def log_10_product(x, pos):
 	return '%1i' % (x)
 
 if __name__=='__main__':
-	fig = plt.figure()
+	fig = plt.figure(figsize=(7.2,5), dpi=300)
 	ax = fig.add_subplot(1,1,1)
 	h = HistFit('padilla_flux.txt')
 	h.hist('soft_fluxes.txt')
@@ -88,7 +88,7 @@ if __name__=='__main__':
 	#y = 43.5652331909*x**(-1.49548499323)
 	#plt.plot(x,y, 'b--')
 	#plt.plot([0.19,0.19],[1,1000], 'b--')
-	axis_font = { 'size': 10 }
+	axis_font = { 'size': 7 }
 	plt.tick_params(axis='both', which='major', labelsize=10)
 	plt.tick_params(axis='both', which='minor', labelsize=10)
 	plt.ylim((10**0,2*10**1))
@@ -100,4 +100,8 @@ if __name__=='__main__':
 	ax.xaxis.set_minor_formatter(formatter)
 	plt.xlabel('2-8 keV Flux [$10^{-15}$ erg cm$^{-2}$ s$^{-1}$]', **axis_font)
 	plt.ylabel('N(>S)', **axis_font)
+	plt.savefig('Extended_Data_Figure_2.png', dpi=300, format='png', bbox_inches='tight')
+	plt.savefig('Extended_Data_Figure_2.eps', dpi=300, format='eps', bbox_inches='tight')
+	plt.savefig('Extended_Data_Figure_2.svg', dpi=300, format='svg', bbox_inches='tight')
+	plt.savefig('Extended_Data_Figure_2.pdf', dpi=300, format='pdf', bbox_inches='tight')
 	plt.show()
