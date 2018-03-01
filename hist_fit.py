@@ -89,8 +89,8 @@ if __name__=='__main__':
 	#plt.plot(x,y, 'b--')
 	#plt.plot([0.19,0.19],[1,1000], 'b--')
 	axis_font = { 'size': 7 }
-	plt.tick_params(axis='both', which='major', labelsize=10)
-	plt.tick_params(axis='both', which='minor', labelsize=10)
+	plt.tick_params(axis='both', which='major', labelsize=7)
+	plt.tick_params(axis='both', which='minor', labelsize=7)
 	plt.ylim((10**0,2*10**1))
 	plt.xlim((1.5*10**0,8*10**0))
 	plt.gca().set_xscale("log")
