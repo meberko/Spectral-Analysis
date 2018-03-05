@@ -303,7 +303,7 @@ class Analyzer():
         plt.savefig('Figure_1.eps', dpi=300, format='eps', bbox_inches='tight')
         plt.savefig('Figure_1.svg', dpi=300, format='svg', bbox_inches='tight')
         plt.savefig('Figure_1.pdf', dpi=300, format='pdf', bbox_inches='tight')
-        plt.show()
+        #plt.show()
 
         # Errorbar plots
         plt.figure(figsize=(7.2,5), dpi=300)
@@ -348,7 +348,7 @@ class Analyzer():
             i+=1
 
         #plt.title('HR2 as a function of Radial Distance from Sgr A* (Net Counts > 100)', **title_font)
-        plt.errorbar(p_r, p_h, yerr=p_he, ls='None', elinewidth = 1, capsize=1, markeredgewidth=1)
+        plt.errorbar(p_r, p_h, yerr=p_he, ls='None', elinewidth = 1.2, capsize=1.5, markeredgewidth=1.5)
         plt.axis([0,3.8,-0.4,1.2])
         plt.plot([0.05,3.75], [0.54,0.54])
         plt.xlabel('Radial Distance from Sgr A* (pc)', **axis_font)
