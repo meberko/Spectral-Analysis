@@ -279,7 +279,7 @@ class Analyzer():
         #plt.title('Sources < 1 pc from Sgr A*', **title_font)
         axis_font = { 'size': 7 }
         plt.subplot(1,2,1)
-        plt.hist(self.data_gt_100['hr2_r_lt_25'], np.linspace(-1,1,11), rwidth=0.9)
+        plt.hist(self.data_gt_100['hr2_r_lt_25'], np.linspace(-1,1.2,12), rwidth=0.9)
         plt.xlabel('HR2', **axis_font)
         plt.ylabel('Frequency', **axis_font)
     	plt.tick_params(axis='both', which='major', labelsize=7)
@@ -291,7 +291,7 @@ class Analyzer():
 
         #plt.title('Sources > 1 pc from Sgr A*', **title_font)
         plt.subplot(1,2,2)
-        plt.hist(self.data_gt_100['hr2_r_gt_25'], np.linspace(-1,1,11), rwidth=0.9)
+        plt.hist(self.data_gt_100['hr2_r_gt_25'], np.linspace(-1,1.2,12), rwidth=0.9)
         plt.xlabel('HR2', **axis_font)
         plt.ylabel('Frequency', **axis_font)
     	plt.tick_params(axis='both', which='major', labelsize=7)
