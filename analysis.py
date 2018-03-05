@@ -286,8 +286,8 @@ class Analyzer():
     	plt.tick_params(axis='both', which='minor', labelsize=7)
         #plt.text(-1, 7.5, r'r<1 pc', fontsize=7)
         #plt.text(-1.45, 8.1, r'a', fontsize=8, weight='bold')
-        plt.text(-1, 8.5, r'r<1 pc', fontsize=7)
-        plt.text(-1.45, 9.1, r'a', fontsize=8, weight='bold')
+        plt.text(-1, 7.5, r'r<1 pc', fontsize=7)
+        plt.text(-1.45, 8.1, r'a', fontsize=8, weight='bold')
 
         #plt.title('Sources > 1 pc from Sgr A*', **title_font)
         plt.subplot(1,2,2)
@@ -303,7 +303,7 @@ class Analyzer():
         plt.savefig('Figure_1.eps', dpi=300, format='eps', bbox_inches='tight')
         plt.savefig('Figure_1.svg', dpi=300, format='svg', bbox_inches='tight')
         plt.savefig('Figure_1.pdf', dpi=300, format='pdf', bbox_inches='tight')
-        #plt.show()
+        plt.show()
 
         # Errorbar plots
         plt.figure(figsize=(7.2,5), dpi=300)
