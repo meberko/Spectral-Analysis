@@ -1062,5 +1062,5 @@ if __name__ == '__main__':
     a.runFlatChiSqrTest()
     a.runFlatChiSqrTestRGt1()
     a.runKSTest()
-    a.plot()
+    #a.plot()
     #a.printSoftSourceInfo()
