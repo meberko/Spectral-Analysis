@@ -1,31 +1,30 @@
 # Region file format: DS9 version 4.1
 global color=cyan dashlist=8 3 width=3 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
 fk5
-circle(266.414190,-29.011370,1")
-circle(266.416040,-29.003990,1") # color=red
 circle(266.416130,-29.009510,1")
 circle(266.417450,-29.004660,1") # color=red
-circle(266.417560,-29.011810,1") # color=red
 circle(266.418250,-29.009330,1")
 circle(266.418370,-29.006700,1")
 circle(266.418570,-29.010100,1")
+circle(266.419730,-29.007750,1") # color=red
+circle(266.412020,-29.007530,1") # color=red
+circle(266.414190,-29.011370,1")
+circle(266.416040,-29.003990,1") # color=red
+circle(266.416710,-29.003480,1") # color=red
+circle(266.416860,-29.012880,1") # color=red
+circle(266.417560,-29.011810,1") # color=red
 circle(266.418960,-29.005280,1") # color=red
 circle(266.419990,-29.006820,1")
-circle(266.419730,-29.007750,1") # color=red
 circle(266.420630,-29.008670,1")
-circle(266.412020,-29.007530,1") # color=red
-circle(266.411980,-29.011620,1") # color=red
+circle(266.421000,-29.007470,1")
+circle(266.421270,-29.008070,1") # color=red
 circle(266.413690,-29.013660,1")
 circle(266.413860,-29.014220,1") # color=red
 circle(266.414510,-29.012740,1")
-circle(266.416710,-29.003480,1") # color=red
-circle(266.416860,-29.012880,1") # color=red
 circle(266.418100,-29.002640,1") # color=red
 circle(266.418210,-29.013870,1")
 circle(266.419330,-29.003730,1")
 circle(266.420940,-29.004910,1") # color=red
-circle(266.421000,-29.007470,1")
-circle(266.421270,-29.008070,1") # color=red
 circle(266.422910,-29.007550,1") # color=red
 circle(266.410100,-29.012240,1") # color=red
 circle(266.417370,-29.015450,1") # color=red

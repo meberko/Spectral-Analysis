@@ -255,7 +255,7 @@ class Analyzer():
                 if self.data_gt_200['names'][j] not in self.undetected:
                     count+=1
             j+=1
-        print count
+        #print count
 
     def getErrData(self):
         with open('rerun_data_1.txt') as f:
@@ -1057,10 +1057,10 @@ if __name__ == '__main__':
     a.printOutside25GT100()
     a.printOutside25GT200()
     #a.pliAvgCalculations()
-    #a.makeReg()
+    a.makeReg()
     #a.printSoftGT100()
-    #a.runFlatChiSqrTest()
-    #a.runFlatChiSqrTestRGt1()
-    #a.runKSTest()
+    a.runFlatChiSqrTest()
+    a.runFlatChiSqrTestRGt1()
+    a.runKSTest()
     a.plot()
     #a.printSoftSourceInfo()
