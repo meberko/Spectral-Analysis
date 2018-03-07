@@ -286,8 +286,8 @@ class Analyzer():
     	plt.tick_params(axis='both', which='minor', labelsize=7)
         #plt.text(-1, 7.5, r'r<1 pc', fontsize=7)
         #plt.text(-1.45, 8.1, r'a', fontsize=8, weight='bold')
-        plt.text(-1, 6.5, r'r<1 pc', fontsize=7)
-        plt.text(-1.45, 7.1, r'a', fontsize=8, weight='bold')
+        plt.text(-1, 7.5, r'r<1 pc', fontsize=7)
+        plt.text(-1.45, 8.1, r'a', fontsize=8, weight='bold')
 
         #plt.title('Sources > 1 pc from Sgr A*', **title_font)
         plt.subplot(1,2,2)
